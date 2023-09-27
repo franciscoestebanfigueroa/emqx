@@ -30,10 +30,11 @@ class app extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final model=Provider.of<Model>(context);
     return MaterialApp(
       color: Colors.black,           
       home: Scaffold(
-        appBar: AppBar(title: Text("EMQT")),
+        appBar: AppBar(title: const Text("EMQT")),
         body: Container(
           
           child: Center(
@@ -44,15 +45,21 @@ class app extends StatelessWidget {
                 
                 MaterialButton(
                   color: Colors.red,
-                  child: Text("Conectar"),
-                  onPressed: (){}),
-                  SizedBox(
+                  child: const Text("Conectar"),
+                  onPressed: (){
+                    model.conectar();
+
+
+                  }),
+                  const SizedBox(
                     height: 40,
                   ),
                 MaterialButton(
                   color: Colors.blue,
-                  child: Text("Led"),
-                  onPressed: (){}),
+                  child: const Text("Led"),
+                  onPressed: (){
+                    model.enviar();
+                  }),
               ],
             ),
           )
