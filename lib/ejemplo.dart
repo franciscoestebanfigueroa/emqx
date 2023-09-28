@@ -28,7 +28,7 @@ final client = MqttServerClient('test.mosquitto.org', '');
 
 var pongCount = 0; // Pong counter
 
-Future<int> main() async {
+Future<int> main2() async {
   /// A websocket URL must start with ws:// or wss:// or Dart will throw an exception, consult your websocket MQTT broker
   /// for details.
   /// To use websockets add the following lines -:
