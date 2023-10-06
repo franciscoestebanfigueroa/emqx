@@ -1,3 +1,4 @@
+import 'package:emqx/ejemplo.dart';
 import 'package:emqx/provider/model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(providers: 
     [
       ChangeNotifierProvider(
-        builder: (context, child) => app(),
+        builder: (context, child) => const app(),
         create: (context) => Model(),
         
 
@@ -58,7 +59,7 @@ class app extends StatelessWidget {
                   color: Colors.blue,
                   child: const Text("Led"),
                   onPressed: (){
-                    model.enviar();
+                    ejemploconectar();
                   }),
               ],
             ),
