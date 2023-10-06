@@ -1,5 +1,9 @@
 import 'package:mqtt_client/mqtt_client.dart';
 
+import 'dart:typed_data' as typed;
+
+
+
 import 'package:mqtt_client/mqtt_server_client.dart';
 
 void ejemploconectar() async {
@@ -9,6 +13,7 @@ void ejemploconectar() async {
   client.useWebSocket = true;
 
   try {
+    print("conectado");
     await client.connect();
 
     // Suscribirse a un tema
@@ -25,10 +30,10 @@ void ejemploconectar() async {
     });
 
     // Publicar un mensaje
-    final topic = 'mi/tema';
+    final topic = 'mitopico';
     final builder = MqttClientPayloadBuilder();
     builder.addString('Hola desde Flutter');
-    //client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload);
+    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
 
     // Desconectar
     //await client.disconnect();

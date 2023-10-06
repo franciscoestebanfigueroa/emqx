@@ -13,7 +13,7 @@ class Model extends ChangeNotifier {
  conectar() {
   print("funcion conectar");
   
-  final client = MqttServerClient('ws://35.219.178.129/mqtt', '');
+  final client = MqttServerClient('ws://ws://34.125.227.33/mqtt', '');
    client.setProtocolV311();
   client.onBadCertificate = (dynamic cert) => true;
   client.logging(on: true);
@@ -24,7 +24,7 @@ class Model extends ChangeNotifier {
   }
 
 void connectToEMQX() async {
-  final client = MqttServerClient('ws://35.219.178.129/mqtt', '');
+  final client = MqttServerClient('ws://ws://34.125.227.33/mqtt', '');
   client.logging(on: true);
   client.useWebSocket=true;
 
