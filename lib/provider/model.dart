@@ -1,67 +1,58 @@
-
-
-
-
 import 'package:flutter/material.dart';
-import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:mqtt_client/mqtt_client.dart';
 
 class Model extends ChangeNotifier {
-  //final client = MqttServerClient('test.mosquitto.org', '');
+late bool estadoConeccion;
+late String estadoLed ;
 
 
- conectar() {
-  print("funcion conectar");
-  
-  final client = MqttServerClient('ws://ws://34.125.227.33/mqtt', '');
-   client.setProtocolV311();
-  client.onBadCertificate = (dynamic cert) => true;
-  client.logging(on: true);
-  client.port=8083; 
-  client.connect("","");
-  print("estado de conexion ${client.connectionStatus}");
-    
-  }
 
-void connectToEMQX() async {
-  final client = MqttServerClient('ws://ws://34.125.227.33/mqtt', '');
-  client.logging(on: true);
-  client.useWebSocket=true;
+Model(){}
 
-  // Establece las credenciales (nombre de usuario y contraseña) si es necesario
-  client.onBadCertificate = (dynamic cert) => true;
-  client.setProtocolV311();
 
-  // Conecta al servidor MQTT
+void conectar() async {
+  final client = MqttServerClient.withPort('ws://34.125.227.33/mqtt', 'fluter', 8083);
+
+  // Establece las credenciales si es necesario
+  client.useWebSocket = true;
+
   try {
     await client.connect();
-  } catch (e) {
-    print('Error de conexión: $e');
-  }
+    print("conectado");
 
-  if (client.connectionStatus == MqttConnectionState.connected) {
-    print('Conectado al servidor EMQ X');
 
-    // Suscríbete a un tema MQTT
-    client.subscribe('your_topic', MqttQos.atMostOnce);
+    // Suscribirse a un tema
+    String subscriptionTopic = 'mitopico';
+    client.subscribe(subscriptionTopic, MqttQos.atLeastOnce);
 
-    // Escucha los mensajes entrantes
-   /* client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> event) {
-      final MqttMessage recMess = event[0].payload;
-      final String message =
-          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+    // Escuchar mensajes
+    client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
+      final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
+      final payload = MqttPublishPayload.bytesToStringAsString(
+          message.payload.message);
 
-      print('Mensaje recibido en el tema ${recMess.variableHeader.topicName}: $message');
+      print('Recibido mensaje en el tema $subscriptionTopic: $payload');
     });
-    */
+
+    // Publicar un mensaje
+    final topic = 'mitopico';
+    final builder = MqttClientPayloadBuilder();
+    builder.addString('Hola desde Flutter');
+    final builderVacio = MqttClientPayloadBuilder();
+    builderVacio.addString('Sin Data');
+    client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload?? builderVacio.payload!);
+
+    // Desconectar
+     client.disconnect();
+  } catch (e) {
+    print('Error al conectar o publicar: $e');
   }
 }
 
 
-  enviar() {  
-  }
 
-  cerrar() {
-   // client.disconnect();
-  }
+
+
 }
+

@@ -1,4 +1,4 @@
-import 'package:emqx/ejemplo.dart';
+import 'package:emqx/conexion.dart';
 import 'package:emqx/provider/model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,7 +48,7 @@ class app extends StatelessWidget {
                   color: Colors.red,
                   child: const Text("Conectar"),
                   onPressed: (){
-                    model.conectar();
+                    
 
 
                   }),
@@ -59,7 +59,7 @@ class app extends StatelessWidget {
                   color: Colors.blue,
                   child: const Text("Led"),
                   onPressed: (){
-                    ejemploconectar();
+                    model.conectar();
                   }),
               ],
             ),
