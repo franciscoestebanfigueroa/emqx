@@ -12,16 +12,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: 
-    [
+    return MultiProvider(providers: [
       ChangeNotifierProvider(
         builder: (context, child) => const app(),
         create: (context) => Model(),
-        
-
       )
-      
-
     ]);
   }
 }
@@ -31,45 +26,34 @@ class app extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final model=Provider.of<Model>(context);
+    final model = Provider.of<Model>(context);
     return MaterialApp(
-      color: Colors.black,           
+      color: Colors.black,
       home: Scaffold(
         appBar: AppBar(title: const Text("EMQT")),
         body: Container(
-          
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                
-                MaterialButton(
+            child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MaterialButton(
                   color: Colors.red,
                   child: const Text("Conectar"),
-                  onPressed: (){
-                    
-
-
-                  }),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                MaterialButton(
-                  color: Colors.blue,
-                  child: const Text("Led"),
-                  onPressed: (){
+                  onPressed: () {
                     model.conectar();
                   }),
-              ],
-            ),
-          )
-
-        ),
-        
+              const SizedBox(
+                height: 40,
+              ),
+              MaterialButton(
+                  color: Colors.blue,
+                  child: const Text("Led"),
+                  onPressed: () {}),
+            ],
+          ),
+        )),
       ),
-      
     );
- 
   }
 }
