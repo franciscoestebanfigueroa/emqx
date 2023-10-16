@@ -10,10 +10,13 @@ class Model extends ChangeNotifier {
 
   void conectar() async {
     final client =
-        MqttServerClient.withPort('ws://34.125.227.33/mqtt', 'fluter', 8083);
+        // MqttServerClient.withPort('ws://34.125.227.33/mqtt', 'fluter', 8083);
+        MqttServerClient.withPort(
+            'ws://192.168.0.12/mqtt', 'fluter_cliente', 8083);
 
     // Establece las credenciales si es necesario
     client.useWebSocket = true;
+    print("${client.clientIdentifier}");
 
     try {
       await client.connect();
@@ -25,6 +28,7 @@ class Model extends ChangeNotifier {
 
       // Escuchar mensajes
       client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
+        print(" data $c");
         final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
         final payload =
             MqttPublishPayload.bytesToStringAsString(message.payload.message);

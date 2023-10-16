@@ -49,7 +49,9 @@ class app extends StatelessWidget {
               MaterialButton(
                   color: Colors.blue,
                   child: const Text("Led"),
-                  onPressed: () {}),
+                  onPressed: () {
+                    conectar();
+                  }),
             ],
           ),
         )),
