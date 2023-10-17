@@ -14,6 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(
+        create: (_) => Model(),
+      ),
+      ChangeNotifierProvider(
         builder: (context, child) => const app(),
         create: (context) => Model(),
       )
@@ -37,20 +40,29 @@ class app extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Text(
+                " La temperatuta ${model.temperatura}",
+                style: const TextStyle(fontSize: 20),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               MaterialButton(
                   color: Colors.red,
-                  child: const Text("Conectar"),
+                  child: const Text("Cero"),
                   onPressed: () {
-                    model.conectar();
+                    model.temperatura = "0";
+                    // model.temperatura = "55";
+                    //model.conectar();
                   }),
               const SizedBox(
                 height: 40,
               ),
               MaterialButton(
                   color: Colors.blue,
-                  child: const Text("Led"),
+                  child: const Text("conectar"),
                   onPressed: () {
-                    conectar();
+                    model.conectar();
                   }),
             ],
           ),
