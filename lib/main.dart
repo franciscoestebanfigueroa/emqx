@@ -1,5 +1,6 @@
 import 'package:emqx/conexion.dart';
 import 'package:emqx/provider/model.dart';
+import 'package:emqx/widget/reloj.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +31,7 @@ class app extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
+
     return MaterialApp(
       color: Colors.black,
       home: Scaffold(
@@ -40,12 +42,13 @@ class app extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Reloj(),
               Text(
-                " La temperatuta ${model.temperatura}",
+                " Temperatura ${model.temperatura}°C",
                 style: const TextStyle(fontSize: 20),
               ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               MaterialButton(
                   color: Colors.red,
@@ -56,7 +59,7 @@ class app extends StatelessWidget {
                     //model.conectar();
                   }),
               const SizedBox(
-                height: 40,
+                height: 20,
               ),
               MaterialButton(
                   color: Colors.blue,

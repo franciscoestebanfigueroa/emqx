@@ -3,7 +3,7 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
 class Model extends ChangeNotifier {
-  String _temperatura = "33";
+  String _temperatura = "0";
   late bool estadoConeccion;
   late String estadoLed;
 
@@ -15,7 +15,16 @@ class Model extends ChangeNotifier {
 
   String get temperatura => _temperatura;
 
-  Model() {}
+  Model() {
+    init();
+  }
+
+  void init() async {
+    temperatura = "100";
+    await Future.delayed(const Duration(seconds: 2));
+    temperatura = "0";
+    conectar();
+  }
 
   Future<MqttServerClient> conectar() async {
     MqttServerClient client =
