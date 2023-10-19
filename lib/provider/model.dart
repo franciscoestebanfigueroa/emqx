@@ -33,6 +33,7 @@ class Model extends ChangeNotifier {
     client.onConnected = () {
       print("Conectado......");
       client.subscribe("esp32/test", MqttQos.atLeastOnce);
+      client.subscribe("esp32/humedad", MqttQos.atLeastOnce);
     };
     client.onDisconnected = () {
       print("Desconectado........................................");
@@ -42,6 +43,7 @@ class Model extends ChangeNotifier {
     };
     client.onSubscribed = (x) {
       print("suscripto a topico $x");
+      
     };
     client.onSubscribeFail = (x) {
       print("55555555555555555");
@@ -57,7 +59,9 @@ class Model extends ChangeNotifier {
         .withWillMessage('Mensaje desde flutter')
         .startClean()
         .withWillQos(MqttQos.atLeastOnce);
+  
     client.connectionMessage = connMessage;
+  
     try {
       print("conectado");
       await client.connect();
@@ -73,10 +77,12 @@ class Model extends ChangeNotifier {
       _temperatura = payload.trim();
       notifyListeners();
       print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');
+      
     });
 
     return client;
   }
+
 
   void conectar2() async {
     final client =
