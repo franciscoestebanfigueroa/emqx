@@ -1,19 +1,32 @@
+import 'package:emqx/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
+enum conexion { on, off }
+
 class Model extends ChangeNotifier {
   String _temperatura = "0";
-  late bool estadoConeccion;
+  String _humedad = "0";
+
+  conexion estadoConexion = conexion.off;
   late String estadoLed;
+  late Esp32 esp32;
 
   set temperatura(String data) {
     _temperatura = data;
-    print(" payload $data");
+    print(" payload temp $data");
+    notifyListeners();
+  }
+
+  set humedad(String data) {
+    _humedad = data;
+    print(" payload hum $data");
     notifyListeners();
   }
 
   String get temperatura => _temperatura;
+  String get humedad => _humedad;
 
   Model() {
     init();
@@ -23,6 +36,10 @@ class Model extends ChangeNotifier {
     temperatura = "100";
     await Future.delayed(const Duration(seconds: 2));
     temperatura = "0";
+    humedad = "100";
+    await Future.delayed(const Duration(seconds: 2));
+    humedad = "0";
+
     conectar();
   }
 
@@ -33,17 +50,19 @@ class Model extends ChangeNotifier {
     client.onConnected = () {
       print("Conectado......");
       client.subscribe("esp32/test", MqttQos.atLeastOnce);
-      client.subscribe("esp32/humedad", MqttQos.atLeastOnce);
+      estadoConexion = conexion.on;
+      notifyListeners();
     };
     client.onDisconnected = () {
       print("Desconectado........................................");
+      estadoConexion = conexion.off;
+      notifyListeners();
     };
     client.onUnsubscribed = (x) {
       print("3333333333333");
     };
     client.onSubscribed = (x) {
       print("suscripto a topico $x");
-      
     };
     client.onSubscribeFail = (x) {
       print("55555555555555555");
@@ -59,9 +78,9 @@ class Model extends ChangeNotifier {
         .withWillMessage('Mensaje desde flutter')
         .startClean()
         .withWillQos(MqttQos.atLeastOnce);
-  
+
     client.connectionMessage = connMessage;
-  
+
     try {
       print("conectado");
       await client.connect();
@@ -74,15 +93,17 @@ class Model extends ChangeNotifier {
       MqttPublishMessage message = c[0].payload as MqttPublishMessage;
       String payload =
           MqttPublishPayload.bytesToStringAsString(message.payload.message);
-      _temperatura = payload.trim();
+      esp32 = esp32FromMap(payload.trim());
+
+      _temperatura = esp32.temperatura;
+      _humedad = esp32.humedad;
       notifyListeners();
+
       print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');
-      
     });
 
     return client;
   }
-
 
   void conectar2() async {
     final client =

@@ -1,16 +1,17 @@
-import 'package:emqx/provider/model.dart';
+import 'package:emqx/provider/provider.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Reloj extends StatelessWidget {
-  const Reloj({Key? key}) : super(key: key);
+  Reloj({required this.valor, Key? key}) : super(key: key);
+  String valor;
 
   /// Build method of your widget.
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
-    String numeroEnString = model.temperatura;
+    String numeroEnString = valor;
     double? numeroEntero = double.tryParse(numeroEnString);
 
     if (numeroEntero != null) {
