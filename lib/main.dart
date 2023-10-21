@@ -1,6 +1,7 @@
 import 'package:emqx/provider/provider.dart';
 import 'package:emqx/widget/reloj.dart';
 import 'package:flutter/material.dart';
+import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -30,16 +31,21 @@ class app extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
+    Future<MqttServerClient> client;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       color: Colors.black,
       home: Scaffold(
         appBar: AppBar(actions: [
           Icon(Icons.signal_cellular_alt,
-              color: model.estadoConexion == conexion.off
-                  ? Color.fromARGB(255, 158, 235, 161)
-                  : Colors.red)
-        ], title: const Text("EMQT")),
+              color: model.estadoConexion == conexion.on
+                  ? const Color.fromARGB(255, 158, 235, 161)
+                  : Colors.red),
+          const SizedBox(
+            width: 20,
+          ),
+        ], title: const Text("EMQTX --- Pancho ---")),
         body: Container(
             child: Center(
           child: Column(
@@ -63,23 +69,23 @@ class app extends StatelessWidget {
                 height: 30,
               ),
               MaterialButton(
+                  color: Colors.blue,
+                  child: const Text("conectar"),
+                  onPressed: () async {
+                    client = model.conectar();
+                  }),
+              MaterialButton(
                   color: Colors.red,
-                  child: const Text("Cero"),
-                  onPressed: () {
+                  child: const Text("Desconectar"),
+                  onPressed: () async {
                     model.temperatura = "0";
                     model.humedad = "0";
-                    // model.temperatura = "55";
-                    //model.conectar();
+
+                    model.desconectar();
                   }),
               const SizedBox(
                 height: 20,
               ),
-              MaterialButton(
-                  color: Colors.blue,
-                  child: const Text("conectar"),
-                  onPressed: () {
-                    model.conectar();
-                  }),
             ],
           ),
         )),

@@ -8,6 +8,7 @@ enum conexion { on, off }
 class Model extends ChangeNotifier {
   String _temperatura = "0";
   String _humedad = "0";
+  late MqttServerClient client;
 
   conexion estadoConexion = conexion.off;
   late String estadoLed;
@@ -29,6 +30,7 @@ class Model extends ChangeNotifier {
   String get humedad => _humedad;
 
   Model() {
+    client = MqttServerClient.withPort('34.125.227.33', 'flutter_client', 1883);
     init();
   }
 
@@ -39,14 +41,12 @@ class Model extends ChangeNotifier {
     humedad = "100";
     await Future.delayed(const Duration(seconds: 2));
     humedad = "0";
-
-    conectar();
+    await conectar();
   }
 
   Future<MqttServerClient> conectar() async {
-    MqttServerClient client =
-        MqttServerClient.withPort('34.125.227.33', 'flutter_client', 1883);
-    client.logging(on: true);
+    //client.logging(on: true);
+
     client.onConnected = () {
       print("Conectado......");
       client.subscribe("esp32/test", MqttQos.atLeastOnce);
@@ -56,6 +56,8 @@ class Model extends ChangeNotifier {
     client.onDisconnected = () {
       print("Desconectado........................................");
       estadoConexion = conexion.off;
+      _humedad = "0";
+      _temperatura = "0";
       notifyListeners();
     };
     client.onUnsubscribed = (x) {
@@ -79,10 +81,9 @@ class Model extends ChangeNotifier {
         .startClean()
         .withWillQos(MqttQos.atLeastOnce);
 
-    client.connectionMessage = connMessage;
+//    client.connectionMessage = connMessage;
 
     try {
-      print("conectado");
       await client.connect();
     } catch (e) {
       print('Exception: $e');
@@ -143,9 +144,17 @@ class Model extends ChangeNotifier {
           topic, MqttQos.atLeastOnce, builder.payload ?? builderVacio.payload!);
 
       // Desconectar
+    } catch (e) {
+      client.disconnect();
+      print('Error al conectar o publicar: $e');
+    }
+  }
+
+  void desconectar() {
+    try {
       client.disconnect();
     } catch (e) {
-      print('Error al conectar o publicar: $e');
+      print('Error al desconectar: $e');
     }
   }
 }

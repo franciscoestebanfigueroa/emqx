@@ -1,7 +1,5 @@
-import 'package:emqx/provider/provider.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Reloj extends StatelessWidget {
   Reloj({required this.valor, Key? key}) : super(key: key);
@@ -10,7 +8,6 @@ class Reloj extends StatelessWidget {
   /// Build method of your widget.
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Model>(context);
     String numeroEnString = valor;
     double? numeroEntero = double.tryParse(numeroEnString);
 
