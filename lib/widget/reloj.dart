@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Reloj extends StatelessWidget {
   Reloj({required this.valor, Key? key}) : super(key: key);
-  String valor;
+  final String valor;
 
   /// Build method of your widget.
   @override
@@ -47,22 +47,22 @@ class Reloj extends StatelessWidget {
 
           /// Set the background color and axis thickness.
           style: GaugeAxisStyle(
-            thickness: 15,
-            background: Color(0xFFDFE2EC),
-            segmentSpacing: 4,
+            thickness: 25,
+            background: Color.fromARGB(0, 247, 247, 248),
+            segmentSpacing: 10,
           ),
 
           /// Define the pointer that will indicate the progress (optional).
           pointer: GaugePointer.needle(
-            borderRadius: 16,
-            color: Color.fromARGB(255, 187, 29, 198),
+            borderRadius: 10,
+            color: Color.fromARGB(255, 0, 1, 1),
             width: 10,
-            height: 100,
+            height: 90,
           ),
 
           /// Define the progress bar (optional).
-          progressBar: GaugeProgressBar.rounded(
-            color: Color.fromARGB(209, 245, 10, 226),
+          progressBar: GaugeProgressBar.basic(
+            color: Color.fromARGB(255, 4, 247, 32),
           ),
 
           /// Define axis segments (optional).
@@ -70,13 +70,13 @@ class Reloj extends StatelessWidget {
             GaugeSegment(
               from: 0,
               to: 33.3,
-              color: Color.fromARGB(255, 122, 187, 244),
+              color: Color.fromARGB(255, 19, 111, 30),
               cornerRadius: Radius.zero,
             ),
             GaugeSegment(
               from: 33.3,
               to: 66.6,
-              color: Color.fromARGB(159, 187, 190, 10),
+              color: Color.fromARGB(255, 247, 174, 28),
               cornerRadius: Radius.zero,
             ),
             GaugeSegment(

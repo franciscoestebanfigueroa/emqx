@@ -8,11 +8,20 @@ enum conexion { on, off }
 class Model extends ChangeNotifier {
   String _temperatura = "0";
   String _humedad = "0";
+  String _termica = "0";
   late MqttServerClient client;
 
   conexion estadoConexion = conexion.off;
   late String estadoLed;
   late Esp32 esp32;
+
+  set termica(String data) {
+    _termica = data;
+    print(" payload temp $data");
+    notifyListeners();
+  }
+
+  String get termica => _termica;
 
   set temperatura(String data) {
     _temperatura = data;
@@ -114,7 +123,7 @@ class Model extends ChangeNotifier {
 
     // Establece las credenciales si es necesario
     client.useWebSocket = true;
-    print("${client.clientIdentifier}");
+    print(client.clientIdentifier);
 
     try {
       await client.connect();
@@ -135,7 +144,7 @@ class Model extends ChangeNotifier {
       });
 
       // Publicar un mensaje
-      final topic = 'esp32/test';
+      const topic = 'esp32/test';
       final builder = MqttClientPayloadBuilder();
       builder.addString('Hola desde Flutter');
       final builderVacio = MqttClientPayloadBuilder();

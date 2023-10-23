@@ -31,8 +31,6 @@ class app extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
-    Future<MqttServerClient> client;
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       color: Colors.black,
@@ -47,48 +45,63 @@ class app extends StatelessWidget {
           ),
         ], title: const Text("EMQTX --- Pancho ---")),
         body: Container(
+            color: Colors.black45,
             child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Reloj(valor: model.temperatura),
-              Text(
-                " Temperatura ${model.temperatura}°C",
-                style: const TextStyle(fontSize: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    "SENSACION TERMICA",
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  Text(
+                    " ${model.termica}%",
+                    style: const TextStyle(fontSize: 30),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Reloj(valor: model.temperatura),
+                  Text(
+                    " Temperatura ${model.temperatura}°C",
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Reloj(valor: model.humedad),
+                  Text(
+                    " Humedad ${model.humedad}%",
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  MaterialButton(
+                      color: model.estadoConexion == conexion.off
+                          ? Colors.blue
+                          : Color.fromARGB(255, 234, 59, 46),
+                      child: model.estadoConexion == conexion.off
+                          ? const Text(
+                              "Conectar",
+                              style: TextStyle(fontSize: 18),
+                            )
+                          : const Text(
+                              "Desconectar",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                      onPressed: () async {
+                        model.estadoConexion == conexion.off
+                            ? model.conectar()
+                            : model.desconectar();
+                      }),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 30,
-              ),
-              Reloj(valor: model.humedad),
-              Text(
-                " Humedad ${model.humedad}%",
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              MaterialButton(
-                  color: Colors.blue,
-                  child: const Text("conectar"),
-                  onPressed: () async {
-                    client = model.conectar();
-                  }),
-              MaterialButton(
-                  color: Colors.red,
-                  child: const Text("Desconectar"),
-                  onPressed: () async {
-                    model.temperatura = "0";
-                    model.humedad = "0";
-
-                    model.desconectar();
-                  }),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
-          ),
-        )),
+            )),
       ),
     );
   }
