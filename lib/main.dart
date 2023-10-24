@@ -36,6 +36,8 @@ class app extends StatelessWidget {
       color: Colors.black,
       home: Scaffold(
         appBar: AppBar(actions: [
+          Icon(Icons.adjust_sharp,color:model.ping_on? Colors.red:Colors.blue),
+          const SizedBox(width: 20,),
           Icon(Icons.signal_cellular_alt,
               color: model.estadoConexion == conexion.on
                   ? const Color.fromARGB(255, 158, 235, 161)
@@ -51,8 +53,9 @@ class app extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  
                   const Text(
-                    "SENSACION TERMICA",
+                    "Sensación Térmica",
                     style: TextStyle(fontSize: 30),
                   ),
                   Text(
@@ -81,7 +84,7 @@ class app extends StatelessWidget {
                   MaterialButton(
                       color: model.estadoConexion == conexion.off
                           ? Colors.blue
-                          : Color.fromARGB(255, 234, 59, 46),
+                          : const Color.fromARGB(255, 234, 59, 46),
                       child: model.estadoConexion == conexion.off
                           ? const Text(
                               "Conectar",
@@ -93,7 +96,7 @@ class app extends StatelessWidget {
                             ),
                       onPressed: () async {
                         model.estadoConexion == conexion.off
-                            ? model.conectar()
+                            ? model.init()
                             : model.desconectar();
                       }),
                   const SizedBox(

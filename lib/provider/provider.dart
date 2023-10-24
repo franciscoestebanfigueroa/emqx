@@ -9,6 +9,7 @@ class Model extends ChangeNotifier {
   String _temperatura = "0";
   String _humedad = "0";
   String _termica = "0";
+  bool _ping =false;
   late MqttServerClient client;
 
   conexion estadoConexion = conexion.off;
@@ -34,6 +35,16 @@ class Model extends ChangeNotifier {
     print(" payload hum $data");
     notifyListeners();
   }
+   Future ping ()async{
+    _ping=true;
+    notifyListeners();
+    await Future.delayed(Duration(milliseconds: 300));
+    _ping=false;
+    //await Future.delayed(Duration(milliseconds: 100));
+    notifyListeners();
+    
+   }
+   bool get ping_on =>_ping;
 
   String get temperatura => _temperatura;
   String get humedad => _humedad;
@@ -44,6 +55,7 @@ class Model extends ChangeNotifier {
   }
 
   void init() async {
+    _ping =false;
     temperatura = "100";
     await Future.delayed(const Duration(seconds: 2));
     temperatura = "0";
@@ -81,6 +93,7 @@ class Model extends ChangeNotifier {
     client.pongCallback = () {
       print("6566666666666666666666");
     };
+    
 
     final connMessage = MqttConnectMessage()
         .authenticateAs('prueba', 'pancho@esteban')
@@ -107,6 +120,8 @@ class Model extends ChangeNotifier {
 
       _temperatura = esp32.temperatura;
       _humedad = esp32.humedad;
+      _termica=esp32.termica;
+      ping();
       notifyListeners();
 
       print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');
