@@ -12,7 +12,10 @@ class Esp32 {
   final String temperatura;
   final String humedad;
   final String termica;
-  Esp32({
+  final String hora;
+  
+  Esp32( {
+    required this.hora,
     required this.termica,
     required this.temperatura,
     required this.humedad,
@@ -22,8 +25,9 @@ class Esp32 {
         temperatura: json["temperatura"],
         humedad: json["humedad"],
         termica: json["termica"],
+        hora:json["hora"],
       );
 
   Map<String, dynamic> toMap() =>
-      {"temperatura": temperatura, "humedad": humedad, "termica": termica};
+      {"temperatura": temperatura, "humedad": humedad, "termica": termica,"hora":hora};
 }

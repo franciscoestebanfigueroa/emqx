@@ -9,12 +9,20 @@ class Model extends ChangeNotifier {
   String _temperatura = "0";
   String _humedad = "0";
   String _termica = "0";
+  String _hora = "";
   bool _ping =false;
   late MqttServerClient client;
 
   conexion estadoConexion = conexion.off;
   late String estadoLed;
   late Esp32 esp32;
+
+  String get hora =>_hora;
+  
+  set hora(String data){
+    _hora=data;
+    notifyListeners();
+  }
 
   set termica(String data) {
     _termica = data;
@@ -121,6 +129,7 @@ class Model extends ChangeNotifier {
       _temperatura = esp32.temperatura;
       _humedad = esp32.humedad;
       _termica=esp32.termica;
+      _hora=esp32.hora;
       ping();
       notifyListeners();
 

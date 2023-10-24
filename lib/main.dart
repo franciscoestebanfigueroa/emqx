@@ -62,6 +62,10 @@ class app extends StatelessWidget {
                     " ${model.termica}%",
                     style: const TextStyle(fontSize: 30),
                   ),
+                  Text(
+                    " ${model.hora}",
+                    style: const TextStyle(fontSize: 30),
+                  ),
                   const SizedBox(
                     height: 50,
                   ),
