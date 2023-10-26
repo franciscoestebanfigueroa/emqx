@@ -1,4 +1,5 @@
 import 'package:emqx/provider/provider.dart';
+import 'package:emqx/widget/progress.dart';
 import 'package:emqx/widget/reloj.dart';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
@@ -49,23 +50,26 @@ class app extends StatelessWidget {
         body: Container(
             color: Colors.black45,
             child: Center(
+              
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+
+                //mainAxisAlignment: MainAxisAlignment.center,
+                //crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                   const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Ultimo Dato ${model.hora}",
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TemperatureCircle(valor: model.termica),
                   
-                  const Text(
-                    "Sensación Térmica",
-                    style: TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    " ${model.termica}%",
-                    style: const TextStyle(fontSize: 30),
-                  ),
-                  Text(
-                    " ${model.hora}",
-                    style: const TextStyle(fontSize: 30),
-                  ),
+                  
+                  
                   const SizedBox(
                     height: 50,
                   ),
