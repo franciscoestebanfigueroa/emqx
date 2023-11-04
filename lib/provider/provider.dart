@@ -79,7 +79,8 @@ class Model extends ChangeNotifier {
 
     client.onConnected = () {
       print("Conectado......");
-      client.subscribe("esp32/test", MqttQos.atLeastOnce);
+     // client.subscribe("esp32/test", MqttQos.atLeastOnce);
+      client.subscribe("esp32/promedio", MqttQos.atLeastOnce);
       estadoConexion = conexion.on;
       notifyListeners();
     };
@@ -103,7 +104,7 @@ class Model extends ChangeNotifier {
       print("6566666666666666666666");
     };
 
-    final connMessage = MqttConnectMessage()
+    /*final connMessage = MqttConnectMessage()
         .authenticateAs('prueba', 'pancho@esteban')
         .keepAliveFor(60)
         .withWillTopic('esp32/test')
@@ -111,8 +112,8 @@ class Model extends ChangeNotifier {
         .startClean()
         .withWillQos(MqttQos.atLeastOnce);
 
-//    client.connectionMessage = connMessage;
-
+    client.connectionMessage = connMessage;
+*/
     try {
       await client.connect();
     } catch (e) {
@@ -124,13 +125,14 @@ class Model extends ChangeNotifier {
       MqttPublishMessage message = c[0].payload as MqttPublishMessage;
       String payload =
           MqttPublishPayload.bytesToStringAsString(message.payload.message);
-      esp32 = esp32FromMap(payload.trim());
+     /* esp32 = esp32FromMap(payload.trim());
 
       _temperatura = esp32.temperatura;
       _humedad = esp32.humedad;
       _termica = esp32.termica;
       _hora = esp32.hora;
       ping();
+     */
       notifyListeners();
 
       print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');

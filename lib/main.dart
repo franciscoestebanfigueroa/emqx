@@ -2,7 +2,6 @@ import 'package:emqx/provider/provider.dart';
 import 'package:emqx/widget/progress.dart';
 import 'package:emqx/widget/reloj.dart';
 import 'package:flutter/material.dart';
-import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:provider/provider.dart';
 
 void main() {
