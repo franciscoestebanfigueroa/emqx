@@ -79,7 +79,7 @@ class Model extends ChangeNotifier {
 
     client.onConnected = () {
       print("Conectado......");
-      client.subscribe("esp32/test", MqttQos.atLeastOnce);
+     // client.subscribe("esp32/test", MqttQos.atLeastOnce);
       client.subscribe("esp32/promedio", MqttQos.atLeastOnce);
       estadoConexion = conexion.on;
       notifyListeners();
@@ -92,28 +92,28 @@ class Model extends ChangeNotifier {
       notifyListeners();
     };
     client.onUnsubscribed = (x) {
-      print("funcion onUnsubscribed");
+      print("3333333333333");
     };
     client.onSubscribed = (x) {
       print("suscripto a topico $x");
     };
     client.onSubscribeFail = (x) {
-      print("suscripcion error");
+      print("55555555555555555");
     };
     client.pongCallback = () {
-      print("pong Callbacj");
+      print("6566666666666666666666");
     };
 
-    final connMessage = MqttConnectMessage()
+    /*final connMessage = MqttConnectMessage()
         .authenticateAs('prueba', 'pancho@esteban')
         .keepAliveFor(60)
-        .withWillTopic('no se')
+        .withWillTopic('esp32/test')
         .withWillMessage('Mensaje desde flutter')
         .startClean()
         .withWillQos(MqttQos.atLeastOnce);
 
     client.connectionMessage = connMessage;
-
+*/
     try {
       await client.connect();
     } catch (e) {
@@ -125,23 +125,65 @@ class Model extends ChangeNotifier {
       MqttPublishMessage message = c[0].payload as MqttPublishMessage;
       String payload =
           MqttPublishPayload.bytesToStringAsString(message.payload.message);
-      esp32 = esp32FromMap(payload.trim());
+     /* esp32 = esp32FromMap(payload.trim());
 
       _temperatura = esp32.temperatura;
       _humedad = esp32.humedad;
       _termica = esp32.termica;
       _hora = esp32.hora;
       ping();
-     
+     */
       notifyListeners();
 
       print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');
-      //print('mensaje :${payload.trim()} del topic: ${c.length}>');
     });
 
     return client;
   }
 
+  void conectar2() async {
+    final client =
+        MqttServerClient.withPort('ws://34.125.227.33/mqtt', 'fluter', 8083);
+    // MqttServerClient.withPort(
+    //    'ws://192.168.0.12/mqtt', 'fluter_cliente', 8083);
+
+    // Establece las credenciales si es necesario
+    client.useWebSocket = true;
+    print(client.clientIdentifier);
+
+    try {
+      await client.connect();
+      print("conectado");
+
+      // Suscribirse a un tema
+      String subscriptionTopic = 'esp32/test';
+      client.subscribe(subscriptionTopic, MqttQos.atLeastOnce);
+
+      // Escuchar mensajes
+      client.updates!.listen((List<MqttReceivedMessage<MqttMessage>> c) {
+        print(" data $c");
+        final MqttPublishMessage message = c[0].payload as MqttPublishMessage;
+        final payload =
+            MqttPublishPayload.bytesToStringAsString(message.payload.message);
+
+        print('Recibido mensaje en el tema $subscriptionTopic: $payload');
+      });
+
+      // Publicar un mensaje
+      const topic = 'esp32/test';
+      final builder = MqttClientPayloadBuilder();
+      builder.addString('Hola desde Flutter');
+      final builderVacio = MqttClientPayloadBuilder();
+      builderVacio.addString('Sin Data');
+      client.publishMessage(
+          topic, MqttQos.atLeastOnce, builder.payload ?? builderVacio.payload!);
+
+      // Desconectar
+    } catch (e) {
+      client.disconnect();
+      print('Error al conectar o publicar: $e');
+    }
+  }
 
   void desconectar() {
     try {

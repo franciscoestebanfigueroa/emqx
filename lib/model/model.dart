@@ -22,10 +22,10 @@ class Esp32 {
   });
 
   factory Esp32.fromMap(Map<String, dynamic> json) => Esp32(
-        temperatura: json["temperatura"],
-        humedad: json["humedad"],
-        termica: json["termica"],
-        hora:json["hora"],
+        temperatura: json["temperatura"]??"nada",
+        humedad: json["humedad"]??"nada",
+        termica: json["termica"]??"nada",
+        hora:json["hora"]??"nada",
       );
 
   Map<String, dynamic> toMap() =>
