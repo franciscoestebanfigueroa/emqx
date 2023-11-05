@@ -13,11 +13,11 @@ class Reloj extends StatelessWidget {
 
     if (numeroEntero != null) {
       // La conversión se realizó con éxito.
-      print("Número entero: $numeroEntero");
+     // print("Número entero: $numeroEntero");
     } else {
       numeroEntero = 0;
       // La conversión no pudo realizarse.
-      print("No es un número entero válido.");
+     // print("No es un número entero válido.");
     }
 
     // Create animated radial gauge.

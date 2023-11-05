@@ -16,6 +16,7 @@ class Model extends ChangeNotifier {
   conexion estadoConexion = conexion.off;
   late String estadoLed;
   late Esp32 esp32;
+  late List<Esp32 > listesp32;
 
   String get hora => _hora;
 
@@ -125,6 +126,9 @@ class Model extends ChangeNotifier {
       MqttPublishMessage message = c[0].payload as MqttPublishMessage;
       String payload =
           MqttPublishPayload.bytesToStringAsString(message.payload.message);
+      
+      if(c[0].topic=="esp32/test"){
+        print("TEST");
       esp32 = esp32FromMap(payload.trim());
 
       _temperatura = esp32.temperatura;
@@ -134,6 +138,22 @@ class Model extends ChangeNotifier {
       ping();
      
       notifyListeners();
+      }
+      if(c[0].topic=="esp32/promedio"){
+        print("PROMEDIO  $payload");
+        
+  
+      /*  esp32 = esp32FromMap(payload.trim());
+
+      _temperatura = esp32.temperatura;
+      _humedad = esp32.humedad;
+      _termica = esp32.termica;
+      _hora = esp32.hora;
+      ping();
+     
+      notifyListeners();
+*/
+      }
 
       print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');
       //print('mensaje :${payload.trim()} del topic: ${c.length}>');
