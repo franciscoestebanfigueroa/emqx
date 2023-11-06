@@ -1,4 +1,5 @@
 import 'package:emqx/provider/provider.dart';
+import 'package:emqx/widget/grafico_barra.dart';
 import 'package:emqx/widget/progress.dart';
 import 'package:emqx/widget/reloj.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,9 @@ class MyApp extends StatelessWidget {
 
 class app extends StatelessWidget {
   const app({super.key});
-
   @override
   Widget build(BuildContext context) {
+    
     final model = Provider.of<Model>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -52,21 +53,46 @@ class app extends StatelessWidget {
         body: Container(
             color: Colors.black45,
             child: Center(
+
               child: SingleChildScrollView(
                 child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  //crossAxisAlignment: CrossAxisAlignment.center,
+                  
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
                       height: 20,
                     ),
                     Row(
-                      children: [
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: 
+                      [Column(
+                         children: 
+                      
+                      List<Widget>.generate(8, (int index)   
+                      {
+                        if(model.listado.isNotEmpty) 
+                        {
+
+                        return Text ("${model.listado[index].tem}°C  ${model.listado[index].hora}",style: const TextStyle(fontSize: 20)  );
+                        }
+
+                        else{
+                          return const Text("sin data" );
+                        }
+                      
+                       }
+                      
+                      
+                      ),                             
+                      
+                      ),
                         Text(
                           "Ultimo Dato ${model.hora}",
                           style: const TextStyle(fontSize: 20),
                         ),
-                      ],
+                      ]
+                      
                     ),
                     const SizedBox(
                       height: 20,

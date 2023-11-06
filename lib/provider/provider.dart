@@ -19,7 +19,7 @@ class Model extends ChangeNotifier {
   conexion estadoConexion = conexion.off;
   late String estadoLed;
   late Esp32 esp32;
-  late List<Datos> listdatos = [];
+  late List<Datos> _listdatos = [];
 
   String get hora => _hora;
 
@@ -27,6 +27,7 @@ class Model extends ChangeNotifier {
     _hora = data;
     notifyListeners();
   }
+List<Datos> get listado =>_listdatos;
 
   set termica(String data) {
     _termica = data;
@@ -146,10 +147,11 @@ class Model extends ChangeNotifier {
         print("PROMEDIO  ");
 
         dynamic jsonz = json.decode(payload);
+        print(jsonz);
 
         for (int i = 1; i <= jsonz.length; i++) {
-          listdatos.add(Datos.fromMap(jsonz[i.toString()]));
-          print(listdatos[i - 1].hora);
+          _listdatos.add(Datos.fromMap(jsonz[i.toString()]));
+          print(_listdatos[i - 1].tem);
         }
         notifyListeners();
 
