@@ -60,9 +60,13 @@ class app extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    Text(
-                      "Ultimo Dato ${model.hora}",
-                      style: const TextStyle(fontSize: 20),
+                    Row(
+                      children: [
+                        Text(
+                          "Ultimo Dato ${model.hora}",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 20,

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:emqx/model/model.dart';
+import 'package:emqx/model/model_promedio.dart';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -16,7 +19,7 @@ class Model extends ChangeNotifier {
   conexion estadoConexion = conexion.off;
   late String estadoLed;
   late Esp32 esp32;
-  late List<Esp32 > listesp32;
+  late List<Datos> listdatos = [];
 
   String get hora => _hora;
 
@@ -126,42 +129,36 @@ class Model extends ChangeNotifier {
       MqttPublishMessage message = c[0].payload as MqttPublishMessage;
       String payload =
           MqttPublishPayload.bytesToStringAsString(message.payload.message);
-      
-      if(c[0].topic=="esp32/test"){
+
+      if (c[0].topic == "esp32/test") {
         print("TEST");
-      esp32 = esp32FromMap(payload.trim());
+        esp32 = esp32FromMap(payload.trim());
 
-      _temperatura = esp32.temperatura;
-      _humedad = esp32.humedad;
-      _termica = esp32.termica;
-      _hora = esp32.hora;
-      ping();
-     
-      notifyListeners();
+        _temperatura = esp32.temperatura;
+        _humedad = esp32.humedad;
+        _termica = esp32.termica;
+        _hora = esp32.hora;
+        ping();
+
+        notifyListeners();
       }
-      if(c[0].topic=="esp32/promedio"){
-        print("PROMEDIO  $payload");
-        
-  
-      /*  esp32 = esp32FromMap(payload.trim());
+      if (c[0].topic == "esp32/promedio") {
+        print("PROMEDIO  ");
 
-      _temperatura = esp32.temperatura;
-      _humedad = esp32.humedad;
-      _termica = esp32.termica;
-      _hora = esp32.hora;
-      ping();
-     
-      notifyListeners();
-*/
+        dynamic jsonz = json.decode(payload);
+
+        for (int i = 1; i <= jsonz.length; i++) {
+          listdatos.add(Datos.fromMap(jsonz[i.toString()]));
+          print(listdatos[i - 1].hora);
+        }
+        notifyListeners();
+
+        //print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');
       }
-
-      print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');
-      //print('mensaje :${payload.trim()} del topic: ${c.length}>');
     });
 
     return client;
   }
-
 
   void desconectar() {
     try {
