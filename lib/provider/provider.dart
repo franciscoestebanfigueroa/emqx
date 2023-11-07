@@ -147,13 +147,15 @@ List<Datos> get listado =>_listdatos;
         print("PROMEDIO  ");
 
         dynamic jsonz = json.decode(payload);
+        print(jsonz.length);
         print(jsonz);
 
+        _listdatos=[];
         for (int i = 1; i <= jsonz.length; i++) {
           _listdatos.add(Datos.fromMap(jsonz[i.toString()]));
           print(_listdatos[i - 1].tem);
-        }
         notifyListeners();
+        }
 
         //print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');
       }

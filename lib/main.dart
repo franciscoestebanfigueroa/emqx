@@ -69,7 +69,7 @@ class app extends StatelessWidget {
                       [Column(
                          children: 
                       
-                      List<Widget>.generate(8, (int index)   
+                      List<Widget>.generate(model.listado.length, (int index)   
                       {
                         if(model.listado.isNotEmpty) 
                         {
