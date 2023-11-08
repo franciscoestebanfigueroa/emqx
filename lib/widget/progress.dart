@@ -7,8 +7,7 @@ class TemperatureCircle extends StatelessWidget {
   final double maxTemperature; // Temperatura máxima (puedes ajustarla)
   final double circleRadius; // Radio del círculo
   final double lineWidth; // Grosor de la línea del círculo
-  
-  
+
   TemperatureCircle({
     required this.valor,
     this.maxTemperature = 100.0,
@@ -19,30 +18,34 @@ class TemperatureCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Calcula el porcentaje de progreso basado en la temperatura
-  String numeroEnString = valor;
+    String numeroEnString = valor;
     double? temperature = double.tryParse(numeroEnString);
     final progress = min(temperature! / maxTemperature, 1.0);
-    Gradient gradient1 = const LinearGradient(colors: 
-  [Colors.red,Colors.blue,]);
-  Gradient gradient2 = const LinearGradient(colors: 
-  [Color.fromARGB(255, 57, 219, 57),Color.fromARGB(255, 202, 37, 15),]);
+    Gradient gradient1 = const LinearGradient(colors: [
+      Colors.red,
+      Colors.blue,
+    ]);
+    Gradient gradient2 = const LinearGradient(colors: [
+      Color.fromARGB(255, 57, 219, 57),
+      Color.fromARGB(255, 202, 37, 15),
+    ]);
     return Stack(
       children: [
         Container(
           width: circleRadius * 2,
-          height: circleRadius *1.5 ,
+          height: circleRadius * 1.5,
           child: CustomPaint(
-            foregroundPainter: CircleProgressPainter(100, lineWidth,gradient1),
+            foregroundPainter: CircleProgressPainter(100, lineWidth, gradient1),
             //child: Text(),
           ),
         ),
         Container(
           width: circleRadius * 2,
-          height: circleRadius *1.5 ,
+          height: circleRadius * 1.5,
           child: CustomPaint(
-            foregroundPainter: CircleProgressPainter(progress, lineWidth,gradient2),
+            foregroundPainter:
+                CircleProgressPainter(progress, lineWidth, gradient2),
             child: Center(
-
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -54,9 +57,16 @@ class TemperatureCircle extends StatelessWidget {
                     ),
                   ),
                   const Text(
-                    "Sensación Térmica",
+                    "Sensación",
                     style: TextStyle(
-                      fontSize: 10.0,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Text(
+                    "Térmica",
+                    style: TextStyle(
+                      fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -73,14 +83,9 @@ class TemperatureCircle extends StatelessWidget {
 class CircleProgressPainter extends CustomPainter {
   final double progress; // Porcentaje de progreso (0.0 a 1.0)
   final double lineWidth; // Grosor de la línea
-  
-  
-  final Gradient gradient;
-  final Rect rect = Rect.fromCircle(
-    center: const Offset(0, 0),
-    radius: 180
 
-  );
+  final Gradient gradient;
+  final Rect rect = Rect.fromCircle(center: const Offset(0, 0), radius: 180);
 
   CircleProgressPainter(this.progress, this.lineWidth, this.gradient);
 
@@ -89,7 +94,7 @@ class CircleProgressPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = min(size.width / 2, size.height / 2);
     final paint = Paint()
-      ..shader=gradient.createShader(rect)
+      ..shader = gradient.createShader(rect)
       //..color = color // Color de la línea del círculo
       ..style = PaintingStyle.stroke
       ..strokeWidth = lineWidth;

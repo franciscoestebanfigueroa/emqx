@@ -27,7 +27,8 @@ class Model extends ChangeNotifier {
     _hora = data;
     notifyListeners();
   }
-List<Datos> get listado =>_listdatos;
+
+  List<Datos> get listado => _listdatos;
 
   set termica(String data) {
     _termica = data;
@@ -150,11 +151,11 @@ List<Datos> get listado =>_listdatos;
         print(jsonz.length);
         print(jsonz);
 
-        _listdatos=[];
-        for (int i = 1; i <= jsonz.length; i++) {
+        _listdatos = [];
+        for (int i = jsonz.length; i >= 0; i--) {
           _listdatos.add(Datos.fromMap(jsonz[i.toString()]));
-          print(_listdatos[i - 1].tem);
-        notifyListeners();
+          //print(_listdatos[i - 1].tem);
+          notifyListeners();
         }
 
         //print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');

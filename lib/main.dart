@@ -30,33 +30,43 @@ class app extends StatelessWidget {
   const app({super.key});
   @override
   Widget build(BuildContext context) {
-    
     final model = Provider.of<Model>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       color: Colors.black,
       home: Scaffold(
-        appBar: AppBar(actions: [
-          Icon(Icons.adjust_sharp,
-              color: model.ping_on ? Colors.red : Colors.blue),
-          const SizedBox(
-            width: 20,
-          ),
-          Icon(Icons.signal_cellular_alt,
-              color: model.estadoConexion == conexion.on
-                  ? const Color.fromARGB(255, 158, 235, 161)
-                  : Colors.red),
-          const SizedBox(
-            width: 20,
-          ),
-        ], title: const Text("--- Pancho ---")),
+        appBar: AppBar(
+          actions: [
+            Center(
+              child: Text(
+                "Ultimo Dato ${model.hora}",
+
+                //style: const TextStyle(fontSize: 20),
+              ),
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            Icon(Icons.adjust_sharp,
+                color: model.ping_on ? Colors.red : Colors.blue),
+            const SizedBox(
+              width: 20,
+            ),
+            Icon(Icons.signal_cellular_alt,
+                color: model.estadoConexion == conexion.on
+                    ? const Color.fromARGB(255, 158, 235, 161)
+                    : Colors.red),
+            const SizedBox(
+              width: 20,
+            ),
+          ],
+          title: const Text("Pancho"),
+        ),
         body: Container(
             color: Colors.black45,
             child: Center(
-
               child: SingleChildScrollView(
                 child: Column(
-                  
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -64,36 +74,21 @@ class app extends StatelessWidget {
                       height: 20,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: 
-                      [Column(
-                         children: 
-                      
-                      List<Widget>.generate(model.listado.length, (int index)   
-                      {
-                        if(model.listado.isNotEmpty) 
-                        {
-
-                        return Text ("${model.listado[index].tem}°C  ${model.listado[index].hora}",style: const TextStyle(fontSize: 20)  );
-                        }
-
-                        else{
-                          return const Text("sin data" );
-                        }
-                      
-                       }
-                      
-                      
-                      ),                             
-                      
-                      ),
-                        Text(
-                          "Ultimo Dato ${model.hora}",
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                      ]
-                      
-                    ),
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            children: List<Widget>.generate(
+                                model.listado.length, (int index) {
+                              if (model.listado.isNotEmpty) {
+                                return Text(
+                                    "${model.listado[index].tem}°C  ${model.listado[index].hora}",
+                                    style: const TextStyle(fontSize: 20));
+                              } else {
+                                return const Text("sin data");
+                              }
+                            }),
+                          ),
+                        ]),
                     const SizedBox(
                       height: 20,
                     ),
@@ -101,18 +96,30 @@ class app extends StatelessWidget {
                     const SizedBox(
                       height: 50,
                     ),
-                    Reloj(valor: model.temperatura),
-                    Text(
-                      " Temperatura ${model.temperatura}°C",
-                      style: const TextStyle(fontSize: 20),
+                    Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Reloj(valor: model.temperatura),
+                        Text(
+                          "Temp ${model.temperatura}°C",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 50,
                     ),
-                    Reloj(valor: model.humedad),
-                    Text(
-                      " Humedad ${model.humedad}%",
-                      style: const TextStyle(fontSize: 20),
+                    Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Reloj(valor: model.humedad),
+                        Text(
+                          " Humedad ${model.humedad}%",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 50,
