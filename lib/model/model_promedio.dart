@@ -18,4 +18,6 @@ class Datos {
         tem: json["T"] ?? "nada",
         hora: json["H"] ?? "nada",
       );
+
+   //Map<String,dynamic> Datos.toMap()=>    
 }
