@@ -19,7 +19,7 @@ class Model extends ChangeNotifier {
   conexion estadoConexion = conexion.off;
   late String estadoLed;
   late Esp32 esp32;
-  late List<Datos> _listdatos = [] ;
+  late List<Datos> _listdatos = [];
 
   String get hora => _hora;
 
@@ -40,7 +40,7 @@ class Model extends ChangeNotifier {
 
   set temperatura(String data) {
     _temperatura = data;
-   // print(" payload temp $data");
+    // print(" payload temp $data");
     notifyListeners();
   }
 
@@ -152,25 +152,19 @@ class Model extends ChangeNotifier {
         print("jsonz -> $jsonz");
 
         _listdatos.clear();
-        List<Map<String,dynamic>> temp=[] ;
+        List<Map<String, dynamic>> temp = [];
 
-
-  
-/*
-       for (int i = jsonz.length; i >= 0; i--) {
-       _listdatos.add(Datos.fromMap(jsonz[i.toString()]));
-        notifyListeners();
-        }
-*/
-        for (int x=1; x<=jsonz.length;x++) {
+        for (int x = 1; x <= jsonz.length; x++) {
           temp.add(jsonz[x.toString()]);
-          _listdatos.add(Datos.fromMap(jsonz[x.toString()]));
-          
         }
-        //temp.sort((a, b) => compararHoras(a, b),);
+
+        temp.sort(
+          (a, b) => compararHoras(a, b),
+        );
         for (var x in temp) {
-         print(x["H"]);
-         
+          _listdatos.add(Datos.fromMap(x));
+          print(x["H"]);
+          notifyListeners();
         }
 
         //print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');
@@ -179,10 +173,11 @@ class Model extends ChangeNotifier {
 
     return client;
   }
-    
+
   int compararHoras(Map<String, dynamic> a, Map<String, dynamic> b) {
-    return b["hora"].compareTo(a["hora"]); // Orden de mayor a menor
+    return b["H"].compareTo(a["H"]); // Orden de mayor a menor
   }
+
   void desconectar() {
     try {
       client.disconnect();
