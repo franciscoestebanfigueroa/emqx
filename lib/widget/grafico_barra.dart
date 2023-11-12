@@ -1,63 +1,50 @@
+import 'dart:js';
+
+import 'package:emqx/model/model_promedio.dart';
+import 'package:emqx/provider/provider.dart';
+import 'package:graphic_representation/graphic_representation.dart';  
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:provider/provider.dart';
 
 
 
-Widget dibujaGrafico(double temperatura, double hora) {
-  return LineChart(
-    LineChartData(
-      titlesData: FlTitlesData(
-        leftTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (_ ,value) => const TextStyle(
-            color: Color(0xff68737d),
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+class GraficoTem extends StatelessWidget {
+
+
+   GraficoTem({super.key, required this.dataTemp});
+
+  List<Datos> dataTemp;
+
+  @override
+  Widget build(BuildContext context) {
+  final model=Provider.of<Model>(context);
+    return Container(
+      child: DiscreteGraphic(
+            size: Size(MediaQuery.of(context).size.width,
+                MediaQuery.of(context).size.height * 0.35),
+              nums: List<double>.generate(dataTemp.length, (int index) => double.parse(dataTemp[index].tem)
+              
+               ),
+            listGradX: const [
+              "Lun",
+              "Mar",
+              "Mer",
+              "Jeu",
+              "Ven",
+              "Sam",
+              "Dim",
+            ],
+            colorAxes: Colors.black,
+            colorLine: Colors.blue,
+            strokeLine : 2.0,
+            colorPoint: Colors.blue,
+            radiusPoint: 3.0,
+            nbGradY: 9,
+            minY: 0,
+            maxY:40
+            //dataTemp[].reduce((value, element) => value > element ? value : element);
+,
           ),
-          getTitles: (value) {
-            if (value == 25) return '25°C';
-            if (value == 30) return '30°C';
-            return '';
-          },
-          margin: 12,
-        ),
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          getTextStyles: (_,value) => const TextStyle(
-            color: Color(0xff68737d),
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-          getTitles: (value) {
-            return hora.toString() + ':00 AM';
-          },
-          margin: 8,
-        ),
-      ),
-      borderData: FlBorderData(
-        show: true,
-        border: Border.all(
-          color: const Color(0xff37434d),
-          width: 1,
-        ),
-      ),
-      minX: 1,
-      maxX: 2,
-      minY: 25,
-      maxY: 30,
-      gridData: FlGridData(show: false),
-      lineBarsData: [
-        LineChartBarData(
-          spots: [
-            FlSpot(1, temperatura),
-          ],
-          isCurved: true,
-          colors: [Colors.blue],
-          dotData: FlDotData(show: true),
-          belowBarData: BarAreaData(show: false),
-        ),
-      ],
-    ),
-  );
+    );
+  }
 }

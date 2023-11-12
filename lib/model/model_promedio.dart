@@ -19,5 +19,6 @@ class Datos {
         hora: json["H"] ?? "nada",
       );
 
+
    //Map<String,dynamic> Datos.toMap()=>    
 }

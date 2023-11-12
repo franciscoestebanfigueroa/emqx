@@ -52,4 +52,7 @@ class Esp32 {
         "termica": termica,
         "hora": hora
       };
+
+
+
 }

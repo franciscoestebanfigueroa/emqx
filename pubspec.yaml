@@ -29,7 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
-  fl_chart: ^0.40.0
+  graphic_representation: ^1.1.2
   flutter:
     sdk: flutter
   gauge_indicator: ^0.4.3

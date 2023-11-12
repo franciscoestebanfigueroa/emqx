@@ -70,6 +70,7 @@ class app extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    GraficoTem(dataTemp:model.listado),
                     const SizedBox(
                       height: 20,
                     ),

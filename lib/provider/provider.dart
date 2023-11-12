@@ -29,6 +29,7 @@ class Model extends ChangeNotifier {
   }
 
   List<Datos> get listado => _listdatos;
+  
 
   set termica(String data) {
     _termica = data;
@@ -184,5 +185,38 @@ class Model extends ChangeNotifier {
     } catch (e) {
       print('Error al desconectar: $e');
     }
+ 
   }
+
+
+List<double>listTemp (List<Datos> datos){
+List<double>listTemp=[];
+  for (var value in datos) {
+    try {
+    listTemp.add(double.parse(value.tem));
+    } catch (e) {
+      print("no se puede convertir");
+      listTemp.add(0.0); 
+    }
+  }
+  return listTemp;
+} 
+List<double>listHora (List<Datos> datos){
+List<double>listhora=[];
+  for (var value in datos) {
+    try {
+    listhora.add(double.parse(value.tem));
+    } catch (e) {
+      print("no se puede convertir");
+      listhora.add(0.0); 
+    }
+  }
+  return listhora;
+
+} 
+
+
+
+
+
 }
