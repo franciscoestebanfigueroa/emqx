@@ -1,4 +1,4 @@
-import 'dart:js';
+
 
 import 'package:emqx/model/model_promedio.dart';
 import 'package:emqx/provider/provider.dart';
@@ -18,14 +18,19 @@ class GraficoTem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   final model=Provider.of<Model>(context);
+  model.listHora(dataTemp).reduce((value, element) {
+     
+     print("value y element $value $element");
+     return value;
+     });
     return Container(
       child: DiscreteGraphic(
             size: Size(MediaQuery.of(context).size.width,
                 MediaQuery.of(context).size.height * 0.35),
-              nums: List<double>.generate(dataTemp.length, (int index) => double.parse(dataTemp[index].tem)
-              
-               ),
-            listGradX: const [
+              nums:
+              // List<double>.generate(dataTemp.length, (int index) => double.parse(dataTemp[index].tem)),
+                 model.listTemp(dataTemp),
+                 listGradX: const [
               "Lun",
               "Mar",
               "Mer",
@@ -42,8 +47,9 @@ class GraficoTem extends StatelessWidget {
             nbGradY: 9,
             minY: 0,
             maxY:40
-            //dataTemp[].reduce((value, element) => value > element ? value : element);
-,
+            //model.listTemp(dataTemp).reduce((value, element) => value > element ? value : element
+            
+
           ),
     );
   }
