@@ -47,7 +47,7 @@ class Model extends ChangeNotifier {
   Future ping() async {
     _ping = true;
     notifyListeners();
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
     _ping = false;
     //await Future.delayed(Duration(milliseconds: 100));
     notifyListeners();

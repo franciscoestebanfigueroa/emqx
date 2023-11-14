@@ -19,7 +19,7 @@ class Model extends ChangeNotifier {
   conexion estadoConexion = conexion.off;
   late String estadoLed;
   late Esp32 esp32;
-  late List<Datos> _listdatos = [];
+  late final List<Datos> _listdatos = [];
 
   String get hora => _hora;
 
@@ -29,7 +29,6 @@ class Model extends ChangeNotifier {
   }
 
   List<Datos> get listado => _listdatos;
-  
 
   set termica(String data) {
     _termica = data;
@@ -54,7 +53,7 @@ class Model extends ChangeNotifier {
   Future ping() async {
     _ping = true;
     notifyListeners();
-    await Future.delayed(Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 300));
     _ping = false;
     //await Future.delayed(Duration(milliseconds: 100));
     notifyListeners();
@@ -185,38 +184,32 @@ class Model extends ChangeNotifier {
     } catch (e) {
       print('Error al desconectar: $e');
     }
- 
   }
 
+  List<double> listTemp(List<Datos> datos) {
+    List<double> listTemp = [];
 
-List<double>listTemp (List<Datos> datos){
-List<double>listTemp=[];
-  for (var value in datos) {
-    try {
-    listTemp.add(double.parse(value.tem));
-    } catch (e) {
-      print("no se puede convertir");
-      listTemp.add(0.0); 
+    for (var value in datos) {
+      try {
+        listTemp.add(double.parse(value.tem));
+      } catch (e) {
+        print("no se puede convertir");
+        listTemp.add(0.0);
+      }
     }
+    return listTemp;
   }
-  return listTemp;
-} 
-List<double>listHora (List<Datos> datos){
-List<double>listhora=[];
-  for (var value in datos) {
-    try {
-    listhora.add(double.parse(value.tem));
-    } catch (e) {
-      print("no se puede convertir");
-      listhora.add(0.0); 
+
+  List<String> listHora(List<Datos> datos) {
+    List<String> listhora = [];
+    for (var value in datos) {
+      try {
+        listhora.add(value.hora);
+      } catch (e) {
+        print("no se puede convertir");
+        listhora.add("sin hora..");
+      }
     }
+    return listhora;
   }
-  return listhora;
-
-} 
-
-
-
-
-
 }

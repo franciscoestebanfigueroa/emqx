@@ -1,4 +1,3 @@
-import 'package:emqx/provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -8,7 +7,7 @@ class TemperatureCircle extends StatelessWidget {
   final double circleRadius; // Radio del círculo
   final double lineWidth; // Grosor de la línea del círculo
 
-  TemperatureCircle({
+  const TemperatureCircle({super.key, 
     required this.valor,
     this.maxTemperature = 100.0,
     this.circleRadius = 100.0,
@@ -31,7 +30,7 @@ class TemperatureCircle extends StatelessWidget {
     ]);
     return Stack(
       children: [
-        Container(
+        SizedBox(
           width: circleRadius * 2,
           height: circleRadius * 1.5,
           child: CustomPaint(
@@ -39,7 +38,7 @@ class TemperatureCircle extends StatelessWidget {
             //child: Text(),
           ),
         ),
-        Container(
+        SizedBox(
           width: circleRadius * 2,
           height: circleRadius * 1.5,
           child: CustomPaint(

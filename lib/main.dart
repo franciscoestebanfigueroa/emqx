@@ -70,14 +70,18 @@ class app extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    GraficoTem(dataTemp:model.listado),
+                    model.listado.isNotEmpty
+                        ? GraficoTem(dataTemp: model.listado)
+                        : const SizedBox(
+                            height: 20,
+                          ),
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
+                    const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Column(
+                          /*Column(
                             children: List<Widget>.generate(
                                 model.listado.length, (int index) {
                               if (model.listado.isNotEmpty) {
@@ -88,7 +92,7 @@ class app extends StatelessWidget {
                                 return const Text("sin data");
                               }
                             }),
-                          ),
+                          ),*/
                         ]),
                     const SizedBox(
                       height: 20,

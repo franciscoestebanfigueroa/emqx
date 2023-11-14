@@ -2,7 +2,7 @@ import 'package:gauge_indicator/gauge_indicator.dart';
 import 'package:flutter/material.dart';
 
 class Reloj extends StatelessWidget {
-  Reloj({required this.valor, Key? key}) : super(key: key);
+  const Reloj({required this.valor, Key? key}) : super(key: key);
   final String valor;
 
   /// Build method of your widget.
