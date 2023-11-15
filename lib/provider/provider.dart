@@ -148,24 +148,33 @@ class Model extends ChangeNotifier {
         print("PROMEDIO  ");
 
         dynamic jsonz = json.decode(payload);
-        print(jsonz.length);
+        //print(jsonz.length);
         print("jsonz -> $jsonz");
 
         _listdatos.clear();
         List<Map<String, dynamic>> temp = [];
 
         for (int x = 1; x <= jsonz.length; x++) {
+          
           temp.add(jsonz[x.toString()]);
         }
-
-        temp.sort(
+try {
+  
+  temp.sort(
           (a, b) => compararHoras(a, b),
         );
+        
+} catch (e) {
+  print(" no se pudo ordenar lista por error en hora $e"); 
+
+
+}
         for (var x in temp) {
+
           _listdatos.add(Datos.fromMap(x));
-          print(x["H"]);
+          print(" en povider _listado ${x["H"]}");
           notifyListeners();
-        }
+        } 
 
         //print('mensaje :${payload.trim()} del topic: ${c[0].topic}>');
       }

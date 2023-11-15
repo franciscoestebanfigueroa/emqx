@@ -19,6 +19,9 @@ class GraficoTem extends StatelessWidget {
         value = element;
       }
       //print("value y element $value $element");
+      if(value==0){
+        value=10;
+      }
       return value;
     });
 
@@ -37,8 +40,8 @@ class GraficoTem extends StatelessWidget {
           colorPoint: Color.fromARGB(255, 216, 70, 17),
           radiusPoint: 4.0,
           nbGradY: nn.length,
-          minY: mintemperature,
-          maxY: maxtemperature
+          minY: -4,//mintemperature-(mintemperature*0.1),
+          maxY: maxtemperature*1.5
           //model.listTemp(dataTemp).reduce((value, element) => value > element ? value : element
 
           ),

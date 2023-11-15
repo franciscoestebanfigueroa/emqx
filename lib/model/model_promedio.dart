@@ -15,8 +15,8 @@ class Datos {
   Datos({required this.tem, required this.hora});
 
   factory Datos.fromMap(Map<String, dynamic> json) => Datos(
-        tem: json["T"] ?? "nada",
-        hora: json["H"] ?? "nada",
+        tem: json["T"] ?? "0",
+        hora: json["H"] ?? "0:0",
       );
 
 

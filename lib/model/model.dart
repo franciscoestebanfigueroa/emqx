@@ -8,17 +8,17 @@ List<Esp32> listEsp32(String str) {
   List<Esp32> listado = [];
   Map<String, dynamic> data = json.decode(str);
 
-  print(data.length);
-  //print(data["2"]["Temperatura"] ?? "nada");
+ // print(data.length);
   for (int i = 1; i <= data.length; i++) {
     listado.add(Esp32(
-      hora: data[i.toString()]["hora"] ?? "",
-      termica: data[i.toString()]["Termica"] ?? "nada",
-      temperatura: data[i.toString()]["Temperatura"] ?? "nada",
-      humedad: data[i.toString()]["Tumedad"] ?? "nada",
+      hora: data[i.toString()]["hora"] ?? "0",
+      termica: data[i.toString()]["Termica"] ?? "0",
+      temperatura: data[i.toString()]["Temperatura"] ?? "0",
+      humedad: data[i.toString()]["Tumedad"] ?? "0",
     ));
   }
 
+  print(listado);
   return listado;
 }
 
@@ -40,10 +40,10 @@ class Esp32 {
   });
 
   factory Esp32.fromMap(Map<String, dynamic> json) => Esp32(
-        temperatura: json["temperatura"] ?? "nada",
-        humedad: json["humedad"] ?? "nada",
-        termica: json["termica"] ?? "nada",
-        hora: json["hora"] ?? "nada",
+        temperatura: json["temperatura"] ?? "0",
+        humedad: json["humedad"] ?? "0",
+        termica: json["termica"] ?? "0",
+        hora: json["hora"] ?? "0:0",
       );
 
   Map<String, dynamic> toMap() => {
