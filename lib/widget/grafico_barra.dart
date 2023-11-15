@@ -19,8 +19,8 @@ class GraficoTem extends StatelessWidget {
         value = element;
       }
       //print("value y element $value $element");
-      if(value==0){
-        value=10;
+      if (value == 0) {
+        value = 10;
       }
       return value;
     });
@@ -30,21 +30,20 @@ class GraficoTem extends StatelessWidget {
         .reduce((value, element) => value > element ? value = element : value);
     return Container(
       child: DiscreteGraphic(
-          size: Size(MediaQuery.of(context).size.width,
-              MediaQuery.of(context).size.height * 0.35),
-          nums: model.listTemp(dataTemp),
-          listGradX: model.listHora(dataTemp),
-          colorAxes: Colors.black,
-          colorLine: Colors.blue,
-          strokeLine: 4.0,
-          colorPoint: Color.fromARGB(255, 216, 70, 17),
-          radiusPoint: 4.0,
-          nbGradY: nn.length,
-          minY: -4,//mintemperature-(mintemperature*0.1),
-          maxY: maxtemperature*1.5
-          //model.listTemp(dataTemp).reduce((value, element) => value > element ? value : element
-
-          ),
+        size: Size(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height * 0.2),
+        nums: model.listTemp(dataTemp),
+        listGradX: model.listHora(dataTemp),
+        colorAxes: Colors.black,
+        colorLine: Colors.blue,
+        strokeLine: 4.0,
+        colorPoint: Color.fromARGB(255, 216, 70, 17),
+        radiusPoint: 4.0,
+        nbGradY: nn.length * 2,
+        minY: mintemperature - (mintemperature * 0.1),
+        maxY: maxtemperature + (maxtemperature * 0.1),
+        //model.listTemp(dataTemp).reduce((value, element) => value > element ? value : element
+      ),
     );
   }
 }
