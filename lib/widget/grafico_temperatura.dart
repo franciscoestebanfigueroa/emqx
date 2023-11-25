@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GraficoTem extends StatelessWidget {
-  GraficoTem({super.key, required this.dataTemp});
-
+  GraficoTem({super.key, required this.dataTemp,required this.size});
+  final double  size;
   List<Datos> dataTemp;
 
   @override
@@ -31,7 +31,7 @@ class GraficoTem extends StatelessWidget {
     return Container(
       child: DiscreteGraphic(
           size: Size(MediaQuery.of(context).size.width,
-              MediaQuery.of(context).size.height * 0.35),
+              MediaQuery.of(context).size.height * size),
           nums: model.listTemp(dataTemp),
           listGradX: model.listHora(dataTemp),
           colorAxes: Colors.black,

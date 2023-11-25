@@ -11,16 +11,27 @@ class PageGrafico extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(),
-        body: Column(
-          children: [
-            model.listado.isNotEmpty
-                      ? GraficoTem(dataTemp: model.listado)
-                      : const SizedBox(
-                          height: 20,
-                        ),
-          ],
+        
+        appBar: AppBar(
+          title: const Text("Grafico"),
+          
+        ),
+        body: Container(
+          padding: EdgeInsets.symmetric(vertical: 50),
+                    color: Colors.black45,
+
+          child: Column(
+
+            children: [
+              model.listado.isNotEmpty
+                        ? GraficoTem(dataTemp: model.listado,size: 0.5)
+                        : const SizedBox(
+                            height: 20,
+                          ),
+            ],
+          ),
         ),
       ),
       

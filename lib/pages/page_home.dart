@@ -18,9 +18,7 @@ class Home extends StatelessWidget {
   final model = Provider.of<Model>(context);
     return Scaffold(
       
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.pushNamed(context, "/grafico");
-      }),
+      
       appBar: AppBar(
         actions: [
           Center(
@@ -57,35 +55,19 @@ class Home extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   model.listado.isNotEmpty
-                      ? GraficoTem(dataTemp: model.listado)
+                      ? GestureDetector(
+                        onTap: (){Navigator.pushNamed(context, "/grafico");},
+                        child: GraficoTem(dataTemp: model.listado, size: 0.15,))
                       : const SizedBox(
                           height: 20,
                         ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        /*Column(
-                          children: List<Widget>.generate(
-                              model.listado.length, (int index) {
-                            if (model.listado.isNotEmpty) {
-                              return Text(
-                                  "${model.listado[index].tem}°C  ${model.listado[index].hora}",
-                                  style: const TextStyle(fontSize: 20));
-                            } else {
-                              return const Text("sin data");
-                            }
-                          }),
-                        ),*/
-                      ]),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  
                   TemperatureCircle(valor: model.termica),
                   const SizedBox(
-                    height: 50,
+                    height: 15,
                   ),
                   Stack(
                     alignment: Alignment.bottomCenter,
@@ -99,7 +81,7 @@ class Home extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 15,
                   ),
                   Stack(
                     alignment: Alignment.bottomCenter,
