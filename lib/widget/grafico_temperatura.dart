@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GraficoTem extends StatelessWidget {
-  GraficoTem({super.key, required this.dataTemp,required this.size});
-  final double  size;
+  GraficoTem({super.key, required this.dataTemp, required this.size});
+  final double size;
   List<Datos> dataTemp;
 
   @override
@@ -19,8 +19,8 @@ class GraficoTem extends StatelessWidget {
         value = element;
       }
       //print("value y element $value $element");
-      if(value==0){
-        value=10;
+      if (value == 0) {
+        value = 10;
       }
       return value;
     });
@@ -39,9 +39,9 @@ class GraficoTem extends StatelessWidget {
           strokeLine: 4.0,
           colorPoint: Color.fromARGB(255, 216, 70, 17),
           radiusPoint: 4.0,
-          nbGradY: nn.length,
-          minY: -4,//mintemperature-(mintemperature*0.1),
-          maxY: maxtemperature*1.5
+          nbGradY: nn.length * 2,
+          minY: -4, //mintemperature-(mintemperature*0.1),
+          maxY: maxtemperature * 1.5
           //model.listTemp(dataTemp).reduce((value, element) => value > element ? value : element
 
           ),

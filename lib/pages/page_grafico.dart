@@ -1,3 +1,4 @@
+import 'package:emqx/pages/page_custom.dart';
 import 'package:emqx/provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,28 +14,31 @@ class PageGrafico extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        
         appBar: AppBar(
           title: const Text("Grafico"),
-          
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: 50),
-                    color: Colors.black45,
-
-          child: Column(
-
-            children: [
-              model.listado.isNotEmpty
-                        ? GraficoTem(dataTemp: model.listado,size: 0.5)
-                        : const SizedBox(
-                            height: 20,
-                          ),
-            ],
-          ),
+        body: SafeArea(
+          child: Stack(children: [
+            CustomPaint(
+              painter: MyPainter(),
+              child: Container(),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 50),
+              color: Colors.black45,
+              child: Column(
+                children: [
+                  model.listado.isNotEmpty
+                      ? GraficoTem(dataTemp: model.listado, size: 0.5)
+                      : const SizedBox(
+                          height: 20,
+                        ),
+                ],
+              ),
+            )
+          ]),
         ),
       ),
-      
     );
   }
 }

@@ -13,11 +13,11 @@ class Reloj extends StatelessWidget {
 
     if (numeroEntero != null) {
       // La conversión se realizó con éxito.
-     // print("Número entero: $numeroEntero");
+      // print("Número entero: $numeroEntero");
     } else {
       numeroEntero = 0;
       // La conversión no pudo realizarse.
-     // print("No es un número entero válido.");
+      // print("No es un número entero válido.");
     }
 
     // Create animated radial gauge.
@@ -43,11 +43,11 @@ class Reloj extends StatelessWidget {
           max: 80,
 
           /// Render the gauge as a 180-degree arc.
-          degrees: 220,
+          degrees: 200,
 
           /// Set the background color and axis thickness.
           style: GaugeAxisStyle(
-            thickness: 25,
+            thickness: 8, //grosor de reloj
             background: Color.fromARGB(0, 247, 247, 248),
             segmentSpacing: 10,
           ),
@@ -57,7 +57,7 @@ class Reloj extends StatelessWidget {
             borderRadius: 10,
             color: Color.fromARGB(255, 0, 1, 1),
             width: 10,
-            height: 90,
+            height: 85,
           ),
 
           /// Define the progress bar (optional).
