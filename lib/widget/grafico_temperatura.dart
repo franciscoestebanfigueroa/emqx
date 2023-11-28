@@ -5,46 +5,32 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GraficoTem extends StatelessWidget {
-  GraficoTem({super.key, required this.dataTemp, required this.size});
+   const GraficoTem({super.key, required this.dataTemp, required this.size,required this.nlineas});
   final double size;
-  List<Datos> dataTemp;
+  final List<Datos> dataTemp;
+  final int nlineas;
 
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
     Set<double> nn = model.listTemp(dataTemp).toSet();
+    
     print("set $nn");
-    double maxtemperature = model.listTemp(dataTemp).reduce((value, element) {
-      if (element > value) {
-        value = element;
-      }
-      //print("value y element $value $element");
-      if (value == 0) {
-        value = 10;
-      }
-      return value;
-    });
-
-    double mintemperature = model
-        .listTemp(dataTemp)
-        .reduce((value, element) => value > element ? value = element : value);
-    return Container(
-      child: DiscreteGraphic(
-          size: Size(MediaQuery.of(context).size.width,
-              MediaQuery.of(context).size.height * size),
-          nums: model.listTemp(dataTemp),
-          listGradX: model.listHora(dataTemp),
-          colorAxes: Colors.black,
-          colorLine: Colors.blue,
-          strokeLine: 4.0,
-          colorPoint: Color.fromARGB(255, 216, 70, 17),
-          radiusPoint: 4.0,
-          nbGradY: nn.length * 2,
-          minY: -4, //mintemperature-(mintemperature*0.1),
-          maxY: maxtemperature * 1.5
-          //model.listTemp(dataTemp).reduce((value, element) => value > element ? value : element
-
-          ),
-    );
+    
+    return DiscreteGraphic(
+        size: Size(MediaQuery.of(context).size.width,
+            MediaQuery.of(context).size.height * size),
+        nums: model.listTemp(dataTemp),
+        listGradX: model.listHora(dataTemp),
+        colorAxes: Colors.black,
+        colorLine: Color.fromARGB(255, 10, 44, 194),
+        strokeLine: 2.5,
+        colorPoint: Color.fromARGB(255, 216, 40, 17),
+        radiusPoint: 4.0,
+        nbGradY: nn.length *nlineas,
+        minY: model.listTemp(dataTemp)[model.listTemp(dataTemp).length-1]+1, 
+        maxY: model.listTemp(dataTemp)[0]-1,
+        
+        );
   }
 }

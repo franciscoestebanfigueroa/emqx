@@ -15,30 +15,28 @@ class PageGrafico extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pop(); // Acción al presionar el botón de regreso
+            },),
           title: const Text("Grafico"),
         ),
         body: SafeArea(
-          child: Stack(children: [
-            CustomPaint(
+          child:  CustomPaint(
               painter: MyPainter(),
-              child: Container(),
+              child: Container(
+                child: Center(
+
+                child: GraficoTem(
+                  nlineas: 5,
+                  dataTemp: model.listado, size: 0.5),                
+                ),
+              ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 50),
-              color: Colors.black45,
-              child: Column(
-                children: [
-                  model.listado.isNotEmpty
-                      ? GraficoTem(dataTemp: model.listado, size: 0.5)
-                      : const SizedBox(
-                          height: 20,
-                        ),
-                ],
               ),
             )
-          ]),
-        ),
-      ),
+          ,
     );
   }
 }

@@ -18,11 +18,9 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         actions: [
           Center(
-            child: Text(
-              "Ultimo Dato ${model.hora}",
-
-              //style: const TextStyle(fontSize: 20),
-            ),
+            child: model.estadoConexion==conexion.on? 
+            Text("Ultimo Dato ${model.hora}")
+            :const Text("Conectando..."),
           ),
           const SizedBox(
             width: 8,
@@ -45,7 +43,7 @@ class Home extends StatelessWidget {
       body: CustomPaint(
         painter: MyPainter(),
         child: Container(
-            color: Colors.black45,
+            //
             child: Center(
               child: SingleChildScrollView(
                 child: Column(
@@ -58,6 +56,7 @@ class Home extends StatelessWidget {
                               Navigator.pushNamed(context, "/grafico");
                             },
                             child: GraficoTem(
+                              nlineas: 1,
                               dataTemp: model.listado,
                               size: 0.15,
                             ))

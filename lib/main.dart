@@ -38,7 +38,7 @@ class app extends StatelessWidget {
       },
       initialRoute: "/",
       debugShowCheckedModeBanner: false,
-      color: Colors.black,
+     
       
       
     );
