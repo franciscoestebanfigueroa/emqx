@@ -18,25 +18,24 @@ class PageGrafico extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.of(context).pop(); // Acción al presionar el botón de regreso
-            },),
+              Navigator.of(context)
+                  .pop(); // Acción al presionar el botón de regreso
+            },
+          ),
           title: const Text("Grafico"),
         ),
         body: SafeArea(
-          child:  CustomPaint(
-              painter: MyPainter(),
-              child: Container(
-                child: Center(
-
-                child: GraficoTem(
-                  nlineas: 5,
-                  dataTemp: model.listado, size: 0.5),                
-                ),
+          child: CustomPaint(
+            painter: MyPainter(),
+            child: Container(
+              child: Center(
+                child:
+                    GraficoTem(nlineas: 2, dataTemp: model.listado, size: 0.5),
               ),
             ),
-              ),
-            )
-          ,
+          ),
+        ),
+      ),
     );
   }
 }
