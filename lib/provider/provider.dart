@@ -159,7 +159,7 @@ class Model extends ChangeNotifier {
         }
         try {
           temp.sort(
-            (a, b) => compararHoras(b, a),
+            (a, b) => compararHoras(b,a),
           );
         } catch (e) {
           print(" no se pudo ordenar lista por error en hora $e");

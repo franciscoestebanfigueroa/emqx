@@ -17,9 +17,15 @@ class GraficoTem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
-    Set<double> nn = model.listTemp(dataTemp).toSet();
+    Set<double> set_temp = model.listTemp(dataTemp).toSet();
+    //List<double> tempordenada=set_temp.toList();
 
-    print("set $nn");
+    print("set temperatura $set_temp");
+    print("minimo ${model.listTemp(dataTemp)[model.listTemp(dataTemp).length - 1]}");
+    print("maximo ${model.listTemp(dataTemp)[0]}");
+
+    
+
 
     return DiscreteGraphic(
       size: Size(MediaQuery.of(context).size.width,
@@ -31,7 +37,7 @@ class GraficoTem extends StatelessWidget {
       strokeLine: 2.5,
       colorPoint: Color.fromARGB(255, 216, 40, 17),
       radiusPoint: 4.0,
-      nbGradY: nn.length * nlineas,
+      nbGradY: set_temp.length * nlineas,
       minY: model.listTemp(dataTemp)[model.listTemp(dataTemp).length - 1],
       maxY: model.listTemp(dataTemp)[0],
     );
