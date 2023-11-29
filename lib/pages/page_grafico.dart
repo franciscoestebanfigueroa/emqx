@@ -30,7 +30,14 @@ class PageGrafico extends StatelessWidget {
             child: Container(
               child: Center(
                 child:
-                    GraficoTem(nlineas: 2, dataTemp: model.listado, size: 0.5),
+                    Column(
+                      children: [
+                        SizedBox(height: 30),
+                        Text("Min ${model.listTemp(model.listado)[model.listTemp(model.listado).length - 1]} / Max ${model.listTemp(model.listado)[0]}"),
+                         
+                        GraficoTem(nlineas: 2, dataTemp: model.listado, size: 0.5),
+                      ],
+                    ),
               ),
             ),
           ),
