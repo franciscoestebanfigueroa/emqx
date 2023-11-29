@@ -18,29 +18,29 @@ class MyApp extends StatelessWidget {
         create: (_) => Model(),
       ),
       ChangeNotifierProvider(
-        builder: (context, child) => const app(),
+        builder: (context, child) => const App(),
         create: (context) => Model(),
       )
     ]);
   }
 }
 
-class app extends StatelessWidget {
-  const app({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
   @override
   Widget build(BuildContext context) {
-    
     return MaterialApp(
-      
+      //theme: ThemeData(useMaterial3: false),
+      //theme: ThemeData.dark(),
+      theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
       routes: {
-       "/":(BuildContext context) => const Home(),
-       "/grafico":(context) => const PageGrafico() 
+        "/": (BuildContext context) => const Home(),
+        "/grafico": (context) => const PageGrafico()
       },
       initialRoute: "/",
       debugShowCheckedModeBanner: false,
-     
-      
-      
     );
   }
 }

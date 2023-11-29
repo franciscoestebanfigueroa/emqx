@@ -11,33 +11,29 @@ class PageGrafico extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.of(context)
-                  .pop(); // Acción al presionar el botón de regreso
-            },
-          ),
-          title: const Text("Grafico"),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context)
+                .pop(); // Acción al presionar el botón de regreso
+          },
         ),
-        body: SafeArea(
-          child: CustomPaint(
-            painter: MyPainter(),
-            child: Container(
-              child: Center(
-                child:
-                    Column(
-                      children: [
-                        SizedBox(height: 30),
-                        Text("Min ${model.listTemp(model.listado)[model.listTemp(model.listado).length - 1]} / Max ${model.listTemp(model.listado)[0]}"),
-                         
-                        GraficoTem(nlineas: 2, dataTemp: model.listado, size: 0.5),
-                      ],
-                    ),
+        title: const Text("Grafico"),
+      ),
+      body: SafeArea(
+        child: CustomPaint(
+          painter: MyPainter(),
+          child: Container(
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(height: 30),
+                  Text(
+                      "Min ${model.listTemp(model.listado)[model.listTemp(model.listado).length - 1]} / Max ${model.listTemp(model.listado)[0]}"),
+                  GraficoTem(nlineas: 2, dataTemp: model.listado, size: 0.5),
+                ],
               ),
             ),
           ),

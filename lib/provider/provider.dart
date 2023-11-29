@@ -159,7 +159,7 @@ class Model extends ChangeNotifier {
         }
         try {
           temp.sort(
-            (a, b) => compararHoras(b,a),
+            (a, b) => compararHoras(b, a),
           );
         } catch (e) {
           print(" no se pudo ordenar lista por error en hora $e");
@@ -179,6 +179,10 @@ class Model extends ChangeNotifier {
 
   int compararHoras(Map<String, dynamic> a, Map<String, dynamic> b) {
     return b["H"].compareTo(a["H"]); // Orden de mayor a menor
+  }
+
+  int compararTemp(Map<String, dynamic> a, Map<String, dynamic> b) {
+    return b["T"].compareTo(a["T"]); // Orden de mayor a menor
   }
 
   void desconectar() {

@@ -17,15 +17,13 @@ class GraficoTem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Model>(context);
-    Set<double> set_temp = model.listTemp(dataTemp).toSet();
+    Set<double> setTemp = model.listTemp(dataTemp).toSet();
     //List<double> tempordenada=set_temp.toList();
 
-    print("set temperatura $set_temp");
-    print("minimo ${model.listTemp(dataTemp)[model.listTemp(dataTemp).length - 1]}");
-    print("maximo ${model.listTemp(dataTemp)[0]}");
-
-    
-
+    // print("set temperatura $set_temp");
+    print(
+        "max ${model.listTemp(dataTemp)[model.listTemp(dataTemp).length - 1]}");
+    print("min ${model.listTemp(dataTemp)[0]}");
 
     return DiscreteGraphic(
       size: Size(MediaQuery.of(context).size.width,
@@ -33,13 +31,21 @@ class GraficoTem extends StatelessWidget {
       nums: model.listTemp(dataTemp),
       listGradX: model.listHora(dataTemp),
       colorAxes: Colors.black,
-      colorLine: Color.fromARGB(255, 10, 44, 194),
+      colorLine: const Color.fromARGB(255, 10, 44, 194),
       strokeLine: 2.5,
-      colorPoint: Color.fromARGB(255, 216, 40, 17),
+      colorPoint: const Color.fromARGB(255, 216, 40, 17),
       radiusPoint: 4.0,
-      nbGradY: set_temp.length * nlineas,
-      minY: model.listTemp(dataTemp)[model.listTemp(dataTemp).length - 1],
-      maxY: model.listTemp(dataTemp)[0],
+      nbGradY: setTemp.length * nlineas,
+      maxY: model.listTemp(dataTemp)[model.listTemp(dataTemp).length - 1],
+      minY: model.listTemp(dataTemp)[0],
     );
   }
+}
+
+//  temp.sort(
+//            (a, b) => compararHoras(b, a),
+//          );
+//
+int compararTemp(Map<String, dynamic> a, Map<String, dynamic> b) {
+  return b["T"].compareTo(a["T"]); // Orden de mayor a menor
 }
