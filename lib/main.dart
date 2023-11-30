@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(
-        create: (_) => Model(),
+        create: (_) => Myprivider(),
       ),
       ChangeNotifierProvider(
         builder: (context, child) => const App(),
-        create: (context) => Model(),
+        create: (context) => Myprivider(),
       )
     ]);
   }

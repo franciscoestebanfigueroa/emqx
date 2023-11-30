@@ -8,13 +8,16 @@ import 'package:mqtt_client/mqtt_client.dart';
 
 enum conexion { on, off }
 
-class Model extends ChangeNotifier {
+class Myprivider extends ChangeNotifier {
   String _temperatura = "0";
   String _humedad = "0";
   String _termica = "0";
   String _hora = "";
   bool _ping = false;
+  List<Map<String, dynamic>> tempOrdenadasHoras = [];
+  List<double> listTempOrdenado=[];
   late MqttServerClient client;
+
 
   conexion estadoConexion = conexion.off;
   late String estadoLed;
@@ -64,7 +67,7 @@ class Model extends ChangeNotifier {
   String get temperatura => _temperatura;
   String get humedad => _humedad;
 
-  Model() {
+  Myprivider() {
     client = MqttServerClient.withPort('34.125.227.33', 'flutter_client', 1883);
     init();
   }
@@ -152,19 +155,20 @@ class Model extends ChangeNotifier {
         print("jsonz -> $jsonz");
 
         _listdatos.clear();
-        List<Map<String, dynamic>> temp = [];
+        tempOrdenadasHoras.clear();
+        
 
         for (int x = 1; x <= jsonz.length; x++) {
-          temp.add(jsonz[x.toString()]);
+          tempOrdenadasHoras.add(jsonz[x.toString()]);
         }
         try {
-          temp.sort(
-            (a, b) => compararHoras(b, a),
+          tempOrdenadasHoras.sort(
+            (a, b) {return a["H"].compareTo(b["H"]);} ,
           );
         } catch (e) {
           print(" no se pudo ordenar lista por error en hora $e");
         }
-        for (var x in temp) {
+        for (var x in tempOrdenadasHoras) {
           _listdatos.add(Datos.fromMap(x));
           //   print(" en povider _listado ${x["H"]}");
           notifyListeners();
@@ -177,13 +181,13 @@ class Model extends ChangeNotifier {
     return client;
   }
 
-  int compararHoras(Map<String, dynamic> a, Map<String, dynamic> b) {
-    return b["H"].compareTo(a["H"]); // Orden de mayor a menor
-  }
+ // int compararHoras(Map<String, dynamic> a, Map<String, dynamic> b) {
+ //   return b["H"].compareTo(a["H"]); // Orden de mayor a menor
+ // }
 
-  int compararTemp(Map<String, dynamic> a, Map<String, dynamic> b) {
-    return b["T"].compareTo(a["T"]); // Orden de mayor a menor
-  }
+  //int compararTemp(Map<String, dynamic> a, Map<String, dynamic> b) {
+  //  return b["T"].compareTo(a["T"]); // Orden de mayor a menor
+  //}
 
   void desconectar() {
     try {
@@ -193,18 +197,29 @@ class Model extends ChangeNotifier {
     }
   }
 
-  List<double> listTemp(List<Datos> datos) {
+  List<double> listTemp() {
     List<double> listTemp = [];
+    
 
-    for (var value in datos) {
+    for (var value in listado) {
       try {
         listTemp.add(double.parse(value.tem));
+
       } catch (e) {
         print("no se puede convertir");
         listTemp.add(0.0);
       }
     }
+    
     return listTemp;
+  }
+
+   maximoMinimo(){
+    listTempOrdenado=listTemp();
+    listTempOrdenado.sort((a,b){return b.compareTo(a);});
+    print("listado ordenado $listTempOrdenado");
+    
+  
   }
 
   List<String> listHora(List<Datos> datos) {

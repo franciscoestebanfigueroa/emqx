@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Model>(context);
+    final model = Provider.of<Myprivider>(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -44,7 +44,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  CustomPaint body(Model model, BuildContext context) {
+  CustomPaint body(Myprivider model, BuildContext context) {
     return CustomPaint(
       painter: MyPainter(),
       child: Center(

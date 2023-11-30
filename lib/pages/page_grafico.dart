@@ -10,7 +10,7 @@ class PageGrafico extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<Model>(context);
+    final model = Provider.of<Myprivider>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -29,9 +29,9 @@ class PageGrafico extends StatelessWidget {
             child: Center(
               child: Column(
                 children: [
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   Text(
-                      "Min ${model.listTemp(model.listado)[model.listTemp(model.listado).length - 1]} / Max ${model.listTemp(model.listado)[0]}"),
+                      "Min ${model.listTempOrdenado[model.listTempOrdenado.length-1]} / Max ${model.listTempOrdenado[0]}"),
                   GraficoTem(nlineas: 2, dataTemp: model.listado, size: 0.5),
                 ],
               ),
