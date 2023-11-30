@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:emqx/pages/page_custom.dart';
 import 'package:emqx/provider/provider.dart';
 import 'package:emqx/widget/grafico_temperatura.dart';
@@ -15,11 +17,29 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<Myprivider>(context);
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: Colors.indigo,
+        semanticLabel: "Drawer",
+        surfaceTintColor: Colors.orange,
+        elevation: 20,
+        //width: 100,
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 40,
+            ),
+            Switch.adaptive(
+              value: true,
+              onChanged: (bool x) {},
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
         actions: [
           Center(
             child: model.estadoConexion == conexion.on
-                ? Text("Ultimo Dato ${model.hora}")
+                ? Text(" ${model.hora}")
                 : const Text("Conectando..."),
           ),
           const SizedBox(
@@ -65,6 +85,7 @@ class Home extends StatelessWidget {
                       ))
                   : const SizedBox(
                       height: 10,
+                      child: CircularProgressIndicator(),
                     ),
               const SizedBox(
                 height: 20,

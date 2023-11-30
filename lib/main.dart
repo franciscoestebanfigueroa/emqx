@@ -32,9 +32,10 @@ class App extends StatelessWidget {
     return MaterialApp(
       //theme: ThemeData(useMaterial3: false),
       //theme: ThemeData.dark(),
-      theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
+      theme: ThemeData.light(
+        useMaterial3: true,
+        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
       routes: {
         "/": (BuildContext context) => const Home(),
         "/grafico": (context) => const PageGrafico()

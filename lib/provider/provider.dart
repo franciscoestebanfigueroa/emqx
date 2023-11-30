@@ -8,6 +8,8 @@ import 'package:mqtt_client/mqtt_client.dart';
 
 enum conexion { on, off }
 
+enum temaDart { dart }
+
 class Myprivider extends ChangeNotifier {
   String _temperatura = "0";
   String _humedad = "0";
@@ -15,9 +17,8 @@ class Myprivider extends ChangeNotifier {
   String _hora = "";
   bool _ping = false;
   List<Map<String, dynamic>> tempOrdenadasHoras = [];
-  List<double> listTempOrdenado=[];
+  List<double> listTempOrdenado = [];
   late MqttServerClient client;
-
 
   conexion estadoConexion = conexion.off;
   late String estadoLed;
@@ -156,14 +157,15 @@ class Myprivider extends ChangeNotifier {
 
         _listdatos.clear();
         tempOrdenadasHoras.clear();
-        
 
         for (int x = 1; x <= jsonz.length; x++) {
           tempOrdenadasHoras.add(jsonz[x.toString()]);
         }
         try {
           tempOrdenadasHoras.sort(
-            (a, b) {return a["H"].compareTo(b["H"]);} ,
+            (a, b) {
+              return a["H"].compareTo(b["H"]);
+            },
           );
         } catch (e) {
           print(" no se pudo ordenar lista por error en hora $e");
@@ -181,9 +183,9 @@ class Myprivider extends ChangeNotifier {
     return client;
   }
 
- // int compararHoras(Map<String, dynamic> a, Map<String, dynamic> b) {
- //   return b["H"].compareTo(a["H"]); // Orden de mayor a menor
- // }
+  // int compararHoras(Map<String, dynamic> a, Map<String, dynamic> b) {
+  //   return b["H"].compareTo(a["H"]); // Orden de mayor a menor
+  // }
 
   //int compararTemp(Map<String, dynamic> a, Map<String, dynamic> b) {
   //  return b["T"].compareTo(a["T"]); // Orden de mayor a menor
@@ -199,27 +201,25 @@ class Myprivider extends ChangeNotifier {
 
   List<double> listTemp() {
     List<double> listTemp = [];
-    
 
     for (var value in listado) {
       try {
         listTemp.add(double.parse(value.tem));
-
       } catch (e) {
         print("no se puede convertir");
         listTemp.add(0.0);
       }
     }
-    
+
     return listTemp;
   }
 
-   maximoMinimo(){
-    listTempOrdenado=listTemp();
-    listTempOrdenado.sort((a,b){return b.compareTo(a);});
+  maximoMinimo() {
+    listTempOrdenado = listTemp();
+    listTempOrdenado.sort((a, b) {
+      return b.compareTo(a);
+    });
     print("listado ordenado $listTempOrdenado");
-    
-  
   }
 
   List<String> listHora(List<Datos> datos) {
