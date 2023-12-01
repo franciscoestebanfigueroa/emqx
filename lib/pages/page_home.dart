@@ -38,7 +38,7 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         actions: [
           Center(
-            child: model.estadoConexion == conexion.on
+            child: model.estadoConexion == Conexion.on
                 ? Text(" ${model.hora}")
                 : const Text("Conectando..."),
           ),
@@ -51,7 +51,7 @@ class Home extends StatelessWidget {
             width: 20,
           ),
           Icon(Icons.signal_cellular_alt,
-              color: model.estadoConexion == conexion.on
+              color: model.estadoConexion == Conexion.on
                   ? const Color.fromARGB(255, 158, 235, 161)
                   : Colors.red),
           const SizedBox(
@@ -78,10 +78,15 @@ class Home extends StatelessWidget {
                       onTap: () {
                         Navigator.pushNamed(context, "/grafico");
                       },
-                      child: GraficoTem(
-                        nlineas: 1,
-                        dataTemp: model.listado,
-                        size: 0.15,
+                      child: AnimatedOpacity(
+
+                        opacity: 0.1,
+                        duration: const Duration(seconds: 5),
+                        child: GraficoTem(
+                          nlineas: 1,
+                          dataTemp: model.listado,
+                          size: 0.15,
+                        ),
                       ))
                   : const SizedBox(
                       height: 10,
@@ -123,10 +128,10 @@ class Home extends StatelessWidget {
                 height: 40,
               ),
               MaterialButton(
-                  color: model.estadoConexion == conexion.off
+                  color: model.estadoConexion == Conexion.off
                       ? Colors.blue
                       : const Color.fromARGB(255, 234, 59, 46),
-                  child: model.estadoConexion == conexion.off
+                  child: model.estadoConexion == Conexion.off
                       ? const Text(
                           "Conectar",
                           style: TextStyle(fontSize: 18),
@@ -136,7 +141,7 @@ class Home extends StatelessWidget {
                           style: TextStyle(fontSize: 18),
                         ),
                   onPressed: () async {
-                    model.estadoConexion == conexion.off
+                    model.estadoConexion == Conexion.off
                         ? model.init()
                         : model.desconectar();
                   }),

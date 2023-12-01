@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
-enum conexion { on, off }
+enum Conexion { on, off }
 
-enum temaDart { dart }
+enum TemaDart { dart }
 
 class Myprivider extends ChangeNotifier {
   String _temperatura = "0";
@@ -20,7 +20,7 @@ class Myprivider extends ChangeNotifier {
   List<double> listTempOrdenado = [];
   late MqttServerClient client;
 
-  conexion estadoConexion = conexion.off;
+  Conexion estadoConexion = Conexion.off;
   late String estadoLed;
   late Esp32 esp32;
   late final List<Datos> _listdatos = [];
@@ -91,12 +91,12 @@ class Myprivider extends ChangeNotifier {
       print("Conectado......");
       client.subscribe("esp32/test", MqttQos.atLeastOnce);
       client.subscribe("esp32/promedio", MqttQos.atLeastOnce);
-      estadoConexion = conexion.on;
+      estadoConexion = Conexion.on;
       notifyListeners();
     };
     client.onDisconnected = () {
       print("Desconectado........................................");
-      estadoConexion = conexion.off;
+      estadoConexion = Conexion.off;
       _humedad = "0";
       _temperatura = "0";
       notifyListeners();
