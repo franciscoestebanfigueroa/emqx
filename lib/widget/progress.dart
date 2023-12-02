@@ -7,7 +7,8 @@ class TemperatureCircle extends StatelessWidget {
   final double circleRadius; // Radio del círculo
   final double lineWidth; // Grosor de la línea del círculo
 
-  const TemperatureCircle({super.key, 
+  const TemperatureCircle({
+    super.key,
     required this.valor,
     this.maxTemperature = 100.0,
     this.circleRadius = 100.0,
@@ -28,53 +29,62 @@ class TemperatureCircle extends StatelessWidget {
       Color.fromARGB(255, 57, 219, 57),
       Color.fromARGB(255, 202, 37, 15),
     ]);
-    return Stack(
-      children: [
-        SizedBox(
-          width: circleRadius * 2,
-          height: circleRadius * 1.5,
-          child: CustomPaint(
-            foregroundPainter: CircleProgressPainter(100, lineWidth, gradient1),
-            //child: Text(),
-          ),
-        ),
-        SizedBox(
-          width: circleRadius * 2,
-          height: circleRadius * 1.5,
-          child: CustomPaint(
-            foregroundPainter:
-                CircleProgressPainter(progress, lineWidth, gradient2),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '$temperature°C',
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(
-                    "Sensación",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(
-                    "Térmica",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+    return TweenAnimationBuilder(
+      tween: Tween<double>(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 400),
+      builder: (context, value, child) => AnimatedScale(
+        scale: value,
+        duration: const Duration(milliseconds: 400),
+        child: Stack(
+          children: [
+            SizedBox(
+              width: circleRadius * 2,
+              height: circleRadius * 1.5,
+              child: CustomPaint(
+                foregroundPainter:
+                    CircleProgressPainter(100, lineWidth, gradient1),
+                //child: Text(),
               ),
             ),
-          ),
+            SizedBox(
+              width: circleRadius * 2,
+              height: circleRadius * 1.5,
+              child: CustomPaint(
+                foregroundPainter:
+                    CircleProgressPainter(progress, lineWidth, gradient2),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '$temperature°C',
+                        style: const TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Text(
+                        "Sensación",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Text(
+                        "Térmica",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

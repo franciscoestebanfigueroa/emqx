@@ -1,7 +1,7 @@
 import 'package:emqx/pages/page_grafico.dart';
 import 'package:emqx/pages/page_home.dart';
 import 'package:emqx/provider/provider.dart';
-import 'package:emqx/widget/grafico_animado.dart';
+//import 'package:emqx/widget/grafico_animado.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

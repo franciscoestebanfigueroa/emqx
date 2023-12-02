@@ -12,35 +12,17 @@ class GraficoAnimado extends StatefulWidget {
 
 class _GraficoAnimadoState extends State<GraficoAnimado>
     with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 3),
-      vsync: this);
-  _controller.forward();
-  
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Myprivider>(context);
-    print("controler en widget animado ${_controller.value}");
-    return 
-      AnimatedOpacity(
-        duration:const  Duration(milliseconds: 500),
-        opacity:_controller.value,
-        child: GraficoTem(dataTemp: model.listado, size: 0.5, nlineas: 2),);
-    
+    return TweenAnimationBuilder(
+      duration: const Duration(milliseconds: 600),
+      tween: Tween<double>(begin: 0, end: 1),
+      builder: (context, value, child) => AnimatedOpacity(
+        duration: const Duration(milliseconds: 600),
+        opacity: value,
+        child: GraficoTem(dataTemp: model.listado, size: 0.5, nlineas: 2),
+      ),
+    );
   }
-  
 }
