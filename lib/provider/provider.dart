@@ -17,7 +17,7 @@ class Myprivider extends ChangeNotifier {
   String _hora = "";
   bool _ping = false;
   List<Map<String, dynamic>> tempOrdenadasHoras = [];
-  List<double> listTempOrdenado = [];
+  List<double> _listTempOrdenado = [];
   late MqttServerClient client;
 
   Conexion estadoConexion = Conexion.off;
@@ -220,12 +220,13 @@ class Myprivider extends ChangeNotifier {
     return listTemp;
   }
 
-  maximoMinimo() {
-    listTempOrdenado = listTemp();
-    listTempOrdenado.sort((a, b) {
+  List<double>maximoMinimo() {
+    _listTempOrdenado = listTemp();
+    _listTempOrdenado.sort((a, b) {
       return b.compareTo(a);
     });
-    print("listado ordenado $listTempOrdenado");
+    print("listado ordenado $_listTempOrdenado");
+    return _listTempOrdenado;
   }
 
   List<String> listHora(List<Datos> datos) {

@@ -18,13 +18,13 @@ class GraficoTem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Myprivider>(context);
-    model.maximoMinimo();
+    
 
     Set<double> setTemp = model.listTemp().toSet();
 
     // print("set temperatura $set_temp");
-    print("max ${model.tempOrdenadasHoras[0]}");
-    print("min ${model.listTempOrdenado[model.listTempOrdenado.length - 1]}}");
+    print("max ${model.maximoMinimo()[0]}");
+    print("min ${model.maximoMinimo()[model.maximoMinimo().length - 1]}}");
     return TweenAnimationBuilder(
       duration: const Duration(milliseconds: 400),
       tween: Tween<double>(begin: 0, end: 1),
@@ -42,8 +42,8 @@ class GraficoTem extends StatelessWidget {
           colorPoint: const Color.fromARGB(255, 216, 40, 17),
           radiusPoint: 4.0,
           nbGradY: setTemp.length * nlineas,
-          maxY: model.listTempOrdenado[0],
-          minY: model.listTempOrdenado[model.listTempOrdenado.length - 1],
+          maxY: model.maximoMinimo()[0],
+          minY: model.maximoMinimo()[model.maximoMinimo().length - 1],
         ),
       ),
     );

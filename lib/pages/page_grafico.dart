@@ -32,7 +32,7 @@ class PageGrafico extends StatelessWidget {
                 children: [
                   const SizedBox(height: 30),
                   Text(
-                      "Min ${model.listTempOrdenado[model.listTempOrdenado.length - 1]} / Max ${model.listTempOrdenado[0]}"),
+                      "Min ${model.maximoMinimo()[model.maximoMinimo().length - 1]} / Max ${model.maximoMinimo()[0]}"),
                   //GraficoTem(nlineas: 2, dataTemp: model.listado, size: 0.5),
                   const GraficoAnimado(),
                 ],
