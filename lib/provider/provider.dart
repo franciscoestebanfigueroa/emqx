@@ -151,8 +151,8 @@ class Myprivider extends ChangeNotifier {
       if (c[0].topic == "esp32/promedio") {
         print("PROMEDIO  ");
 
+        try {
         dynamic jsonz = json.decode(payload);
-        //print(jsonz.length);
         print("jsonz -> $jsonz");
 
         _listdatos.clear();
@@ -161,6 +161,12 @@ class Myprivider extends ChangeNotifier {
         for (int x = 1; x <= jsonz.length; x++) {
           tempOrdenadasHoras.add(jsonz[x.toString()]);
         }
+
+
+        } catch (e) {
+          print("Json promedio"); 
+        }
+        //print(jsonz.length);
         try {
           tempOrdenadasHoras.sort(
             (a, b) {

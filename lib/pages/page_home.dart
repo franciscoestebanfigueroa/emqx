@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:emqx/pages/page_custom.dart';
 import 'package:emqx/provider/provider.dart';
+import 'package:emqx/widget/grafico_animado.dart';
 import 'package:emqx/widget/grafico_temperatura.dart';
 import 'package:emqx/widget/progress.dart';
 import 'package:emqx/widget/reloj.dart';
@@ -73,24 +74,20 @@ class Home extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              model.listado.isNotEmpty
+              model.listTemp().length>=2
                   ? GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, "/grafico");
                       },
-                      child: AnimatedOpacity(
-
-                        opacity: 0.1,
-                        duration: const Duration(seconds: 5),
-                        child: GraficoTem(
-                          nlineas: 1,
-                          dataTemp: model.listado,
-                          size: 0.15,
-                        ),
-                      ))
+                      child:
+                      GraficoTem(
+                        nlineas: 1,
+                        dataTemp: model.listado,
+                        size: 0.15,
+                      ),
+                      )
                   : const SizedBox(
-                      height: 10,
-                      child: CircularProgressIndicator(),
+                                           
                     ),
               const SizedBox(
                 height: 20,
