@@ -8,7 +8,7 @@ import 'package:mqtt_client/mqtt_client.dart';
 
 enum Conexion { on, off }
 
-enum TemaDart { dart }
+
 
 class Myprivider extends ChangeNotifier {
   String _temperatura = "0";

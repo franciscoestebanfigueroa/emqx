@@ -1,6 +1,7 @@
 import 'package:emqx/pages/page_custom.dart';
 import 'package:emqx/provider/provider.dart';
-import 'package:emqx/widget/grafico_animado.dart';
+import 'package:emqx/widget/grafico_temperatura.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,8 +34,8 @@ class PageGrafico extends StatelessWidget {
                   const SizedBox(height: 30),
                   Text(
                       "Min ${model.maximoMinimo()[model.maximoMinimo().length - 1]} / Max ${model.maximoMinimo()[0]}"),
-                  //GraficoTem(nlineas: 2, dataTemp: model.listado, size: 0.5),
-                  const GraficoAnimado(),
+                  GraficoTem(nlineas: 2, dataTemp: model.listado, size: 0.5),
+                 
                 ],
               ),
             ),

@@ -1,8 +1,8 @@
-import 'dart:ui';
+
 
 import 'package:emqx/pages/page_custom.dart';
 import 'package:emqx/provider/provider.dart';
-//import 'package:emqx/widget/grafico_animado.dart';
+import 'package:emqx/widget/my_drawer.dart';
 import 'package:emqx/widget/grafico_temperatura.dart';
 import 'package:emqx/widget/progress.dart';
 import 'package:emqx/widget/reloj.dart';
@@ -18,24 +18,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<Myprivider>(context);
     return Scaffold(
-      drawer: Drawer(
-        backgroundColor: Colors.indigo,
-        semanticLabel: "Drawer",
-        surfaceTintColor: Colors.orange,
-        elevation: 20,
-        //width: 100,
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            Switch.adaptive(
-              value: true,
-              onChanged: (bool x) {},
-            )
-          ],
-        ),
-      ),
+      drawer: MyDrawer(),
       appBar: AppBar(
         actions: [
           Center(
@@ -149,3 +132,4 @@ class Home extends StatelessWidget {
     );
   }
 }
+
