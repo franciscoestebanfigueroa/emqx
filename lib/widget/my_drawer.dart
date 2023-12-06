@@ -49,7 +49,7 @@ class MyDrawer extends StatelessWidget {
               // radius:MediaQuery.of(context).size.width*.2,
             ),
           ),
-          Expanded(child: Circulo()),
+          //Expanded(child: ),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
