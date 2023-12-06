@@ -76,18 +76,31 @@ class MyDrawer extends StatelessWidget {
   }
 }
 
-class Circulo extends StatelessWidget {
+class Circulo extends StatefulWidget {
   const Circulo({super.key, this.child});
 
   final Widget? child;
+  @override
+  State<Circulo> createState() => _CirculoState();
+}
+
+class _CirculoState extends State<Circulo> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  @override
+  void initState() {
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _controller.repeat();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
-        AnimatedRotation(
-          duration: const Duration(seconds: 1000),
-          turns: 1000,
+        RotationTransition(
+          turns: Tween<double>(begin: 0, end: 1).animate(_controller),
           child: Container(
             width: 200,
             decoration: const BoxDecoration(
@@ -103,9 +116,15 @@ class Circulo extends StatelessWidget {
             color: Colors.black,
             shape: BoxShape.circle,
           ),
-          child: child,
+          child: widget.child,
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

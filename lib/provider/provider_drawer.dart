@@ -16,21 +16,5 @@ class ProviderDrawer extends ChangeNotifier {
     notifyListeners();
   }
 
-  void init() {
-    globalKey.currentState!.openDrawer();
-
-    //print("drawer ${globalKey.currentState!.isDrawerOpen}");
-  }
-}
-
-void _drawerListener(DragEndDetails details) {
-  if (details.primaryVelocity! > 0) {
-    // Drawer se abrió
-    print('El drawer se abrió');
-    // Realiza las acciones que desees cuando el drawer se abra
-  } else if (details.primaryVelocity! < 0) {
-    // Drawer se cerró
-    print('El drawer se cerró');
-    // Realiza las acciones que desees cuando el drawer se cierre
-  }
+  void init() {}
 }

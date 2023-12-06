@@ -16,10 +16,8 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Myprivider>(context);
-    final modelDrawer = Provider.of<ProviderDrawer>(context);
 
     return Scaffold(
-      // key: modelDrawer.globalKey,
       drawer: const MyDrawer(),
       appBar: AppBar(
         actions: [
