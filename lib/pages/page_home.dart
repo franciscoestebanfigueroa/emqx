@@ -1,7 +1,6 @@
-
-
 import 'package:emqx/pages/page_custom.dart';
 import 'package:emqx/provider/provider.dart';
+import 'package:emqx/provider/provider_drawer.dart';
 import 'package:emqx/widget/my_drawer.dart';
 import 'package:emqx/widget/grafico_temperatura.dart';
 import 'package:emqx/widget/progress.dart';
@@ -17,8 +16,11 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<Myprivider>(context);
+    final modelDrawer = Provider.of<ProviderDrawer>(context);
+
     return Scaffold(
-      drawer: MyDrawer(),
+      // key: modelDrawer.globalKey,
+      drawer: const MyDrawer(),
       appBar: AppBar(
         actions: [
           Center(
@@ -132,4 +134,3 @@ class Home extends StatelessWidget {
     );
   }
 }
-
