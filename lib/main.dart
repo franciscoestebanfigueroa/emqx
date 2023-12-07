@@ -31,13 +31,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = Provider.of<ProviderDrawer>(context);
     return MaterialApp(
-      //theme: ThemeData(useMaterial3: false),
-      //theme: ThemeData.dark(),
-      theme: model.estadoTema ? ThemeData.light() : ThemeData.dark(),
-      // light(
-      //   useMaterial3: true,
-      //   //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      // ),
+        theme: model.estadoTema ? ThemeData.light(
+        useMaterial3: true
+      ) : ThemeData.dark(
+        useMaterial3: true
+      ),
+      
       routes: {
         "/": (BuildContext context) => const Home(),
         "/grafico": (context) => const PageGrafico()

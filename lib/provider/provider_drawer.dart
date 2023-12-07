@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 //enum  MyTema{ ThemeData.dark() ,light()}
 class ProviderDrawer extends ChangeNotifier {
   bool _estadoTema = true;
-  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
+  TextEditingController setMax=TextEditingController(text: " Maxima");
+  TextEditingController setMin=TextEditingController(text: " Minima");
 
   ProviderDrawer() {
+  print("provider drawer");
+  print(setMax);
+  print(setMin);
+
     init();
   }
+
 
   bool get estadoTema => _estadoTema;
 

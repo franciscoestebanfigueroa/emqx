@@ -51,7 +51,26 @@ class MyDrawer extends StatelessWidget {
               // radius:MediaQuery.of(context).size.width*.2,
             ),
           ),
-          //Expanded(child: ),
+          Expanded(child:Container(
+            
+            width: 200,
+            child:  Column(
+              children:[
+                const Text("Rango de Temperatura"),
+                TextField(
+                  controller: model.setMax,
+                  maxLength: 2,
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  controller: model.setMin,
+                  maxLength: 2,
+                )
+          
+              ]
+            ),
+          ) ),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
