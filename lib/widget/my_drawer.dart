@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:emqx/provider/provider.dart';
 import 'package:emqx/provider/provider_drawer.dart';
+import 'package:emqx/widget/circulo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,7 @@ class MyDrawer extends StatelessWidget {
               //radius: MediaQuery.of(context).size.width*.2,
               maxRadius: 100,
               child: Circulo(
+                color: model.estadoTema ? Colors.white : Colors.black,
                 child: AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 500),
                   style: model2.ping_on
@@ -73,58 +75,5 @@ class MyDrawer extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class Circulo extends StatefulWidget {
-  const Circulo({super.key, this.child});
-
-  final Widget? child;
-  @override
-  State<Circulo> createState() => _CirculoState();
-}
-
-class _CirculoState extends State<Circulo> with TickerProviderStateMixin {
-  late AnimationController _controller;
-  @override
-  void initState() {
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    _controller.repeat();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        RotationTransition(
-          turns: Tween<double>(begin: 0, end: 1).animate(_controller),
-          child: Container(
-            width: 200,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(colors: [Colors.red, Colors.blue]),
-              //color: Colors.red,
-              shape: BoxShape.circle,
-            ),
-          ),
-        ),
-        Container(
-          width: 180,
-          decoration: const BoxDecoration(
-            color: Colors.black,
-            shape: BoxShape.circle,
-          ),
-          child: widget.child,
-        ),
-      ],
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 }

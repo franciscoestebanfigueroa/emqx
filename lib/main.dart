@@ -16,13 +16,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(
-       create: (context)=> ProviderDrawer()
-       ),
+      ChangeNotifierProvider(create: (context) => ProviderDrawer()),
       ChangeNotifierProvider(
         builder: (context, child) => const App(),
         create: (context) => Myprivider(),
-        
       )
     ]);
   }
@@ -36,15 +33,14 @@ class App extends StatelessWidget {
     return MaterialApp(
       //theme: ThemeData(useMaterial3: false),
       //theme: ThemeData.dark(),
-      theme: model.estadoTema?ThemeData.dark():ThemeData.light(),
-     // light(
-     //   useMaterial3: true,
-     //   //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-     // ),
+      theme: model.estadoTema ? ThemeData.light() : ThemeData.dark(),
+      // light(
+      //   useMaterial3: true,
+      //   //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      // ),
       routes: {
         "/": (BuildContext context) => const Home(),
         "/grafico": (context) => const PageGrafico()
-        
       },
       initialRoute: "/",
       debugShowCheckedModeBanner: false,
