@@ -6,6 +6,8 @@ import 'package:emqx/widget/circulo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../pages/page_set_temperature.dart';
+
 class MyDrawer extends StatelessWidget {
   const MyDrawer({
     super.key,
@@ -24,6 +26,7 @@ class MyDrawer extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
+            flex: 3,
             child: CircleAvatar(
               //radius: MediaQuery.of(context).size.width*.2,
               maxRadius: 100,
@@ -51,27 +54,11 @@ class MyDrawer extends StatelessWidget {
               // radius:MediaQuery.of(context).size.width*.2,
             ),
           ),
-          Expanded(child:Container(
-            
-            width: 200,
-            child:  Column(
-              children:[
-                const Text("Rango de Temperatura"),
-                TextField(
-                  controller: model.setMax,
-                  maxLength: 2,
-                  keyboardType: TextInputType.number,
-                ),
-                TextField(
-                  keyboardType: TextInputType.number,
-                  controller: model.setMin,
-                  maxLength: 2,
-                )
-          
-              ]
-            ),
-          ) ),
           Expanded(
+            flex: 6,
+             child:SetTemperature(model: model) ),
+          Expanded(
+            flex: 1,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -96,3 +83,4 @@ class MyDrawer extends StatelessWidget {
     );
   }
 }
+
