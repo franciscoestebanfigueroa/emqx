@@ -1,18 +1,21 @@
+import 'package:emqx/provider/provider.dart';
 import 'package:emqx/widget/circulo.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../provider/provider_drawer.dart';
 
 class SetTemperature extends StatelessWidget {
   const SetTemperature({
     super.key,
-    required this.model,
+    
   });
 
-  final ProviderDrawer model;
 
   @override
   Widget build(BuildContext context) {
+  final modelDw= Provider.of<ProviderDrawer>(context);
+  final modelPrv= Provider.of<Myprivider>(context);
     return Container(
       
 //     color:Colors.red,
@@ -29,21 +32,23 @@ class SetTemperature extends StatelessWidget {
                 children: [
                   TextField(
                     
-                    controller: model.setMax,
+                    controller: modelDw.setMax,
                     maxLength: 2,
                     keyboardType: TextInputType.number,
                   ),
               TextField(
                 keyboardType: TextInputType.number,
-                controller: model.setMin,
+                controller: modelDw.setMin,
                 maxLength: 2,
               ),
                 ],
               ),
             ),
-            IconButton(onPressed: (){}, icon: Icon(Icons.swap_vert_circle_outlined,size: 50),),
+            IconButton(onPressed: (){
+              modelPrv.setTemperatura(estado: "set", min: modelDw.setMin.text, max: modelDw.setMax.text);
+            }, icon: Icon(Icons.swap_vert_circle_outlined,size: 50),),
             Container(                       
-              height: 220,
+              height: 200,
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

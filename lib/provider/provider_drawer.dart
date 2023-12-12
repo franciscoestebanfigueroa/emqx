@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 //enum  MyTema{ ThemeData.dark() ,light()}
 class ProviderDrawer extends ChangeNotifier {
   bool _estadoTema = true;
-  TextEditingController setMax=TextEditingController();
-  TextEditingController setMin=TextEditingController();
+  TextEditingController setMax=TextEditingController(text: "8");
+  TextEditingController setMin=TextEditingController(text: "4");
 
   ProviderDrawer() {
   print("provider drawer");

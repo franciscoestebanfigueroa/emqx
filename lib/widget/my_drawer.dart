@@ -54,9 +54,9 @@ class MyDrawer extends StatelessWidget {
               // radius:MediaQuery.of(context).size.width*.2,
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 6,
-             child:SetTemperature(model: model) ),
+             child:SetTemperature() ),
           Expanded(
             flex: 1,
             child: Column(
