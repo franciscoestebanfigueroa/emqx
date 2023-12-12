@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:emqx/model/model.dart';
 import 'package:emqx/model/model_promedio.dart';
@@ -91,7 +92,12 @@ class Myprivider extends ChangeNotifier {
       print("Conectado......");
       client.subscribe("esp32/test", MqttQos.atLeastOnce);
       client.subscribe("esp32/promedio", MqttQos.atLeastOnce);
+      client.subscribe("esp32/settemp", MqttQos.atLeastOnce);
       estadoConexion = Conexion.on;
+      final builder = MqttClientPayloadBuilder();
+    builder.addString('{"estado":"set","min":"4","max":"8"}');
+     
+      client.publishMessage('topic/flutter', MqttQos.exactlyOnce, builder.payload! );
       notifyListeners();
     };
     client.onDisconnected = () {
