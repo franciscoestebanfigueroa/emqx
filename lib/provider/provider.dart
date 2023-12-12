@@ -97,7 +97,7 @@ class Myprivider extends ChangeNotifier {
       final builder = MqttClientPayloadBuilder();
     builder.addString('{"estado":"set","min":"4","max":"8"}');
      
-      client.publishMessage('topic/flutter', MqttQos.exactlyOnce, builder.payload! );
+      client.publishMessage('esp32/settemp', MqttQos.exactlyOnce, builder.payload! );
       notifyListeners();
     };
     client.onDisconnected = () {
