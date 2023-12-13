@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:emqx/model/model.dart';
 import 'package:emqx/model/model_promedio.dart';
@@ -9,13 +8,13 @@ import 'package:mqtt_client/mqtt_client.dart';
 
 enum Conexion { on, off }
 
-
-
 class Myprivider extends ChangeNotifier {
   String _temperatura = "0";
   String _humedad = "0";
   String _termica = "0";
   String _hora = "";
+  String _setMax = "";
+  String _setMin = "";
   bool _ping = false;
   List<Map<String, dynamic>> tempOrdenadasHoras = [];
   List<double> _listTempOrdenado = [];
@@ -27,6 +26,10 @@ class Myprivider extends ChangeNotifier {
   late final List<Datos> _listdatos = [];
 
   String get hora => _hora;
+
+  String get setMax => _setMax;
+
+  String get setMin => _setMin;
 
   set hora(String data) {
     _hora = data;
@@ -94,7 +97,7 @@ class Myprivider extends ChangeNotifier {
       client.subscribe("esp32/promedio", MqttQos.atLeastOnce);
       client.subscribe("esp32/settemp", MqttQos.atLeastOnce);
       estadoConexion = Conexion.on;
-      
+
       notifyListeners();
     };
     client.onDisconnected = () {
@@ -151,23 +154,35 @@ class Myprivider extends ChangeNotifier {
 
         notifyListeners();
       }
+      if (c[0].topic == "esp32/settemp") {
+        print("Seteo Maximos");
+        // print(payload.trim());
+        dynamic seteo = json.decode(payload);
+        print(seteo);
+        if (seteo["estado"] == "ok") {
+          _setMax = seteo["max"].toString();
+          _setMin = seteo["min"].toString();
+        }
+
+        ping();
+
+        notifyListeners();
+      }
       if (c[0].topic == "esp32/promedio") {
         print("PROMEDIO  ");
 
         try {
-        dynamic jsonz = json.decode(payload);
-        print("jsonz -> $jsonz");
+          dynamic jsonz = json.decode(payload);
+          print("jsonz -> $jsonz");
 
-        _listdatos.clear();
-        tempOrdenadasHoras.clear();
+          _listdatos.clear();
+          tempOrdenadasHoras.clear();
 
-        for (int x = 1; x <= jsonz.length; x++) {
-          tempOrdenadasHoras.add(jsonz[x.toString()]);
-        }
-
-
+          for (int x = 1; x <= jsonz.length; x++) {
+            tempOrdenadasHoras.add(jsonz[x.toString()]);
+          }
         } catch (e) {
-          print("Json promedio"); 
+          print("Json promedio");
         }
         //print(jsonz.length);
         try {
@@ -223,7 +238,7 @@ class Myprivider extends ChangeNotifier {
     return listTemp;
   }
 
-  List<double>maximoMinimo() {
+  List<double> maximoMinimo() {
     _listTempOrdenado = listTemp();
     _listTempOrdenado.sort((a, b) {
       return b.compareTo(a);
@@ -245,13 +260,13 @@ class Myprivider extends ChangeNotifier {
     return listhora;
   }
 
-
-void setTemperatura({required String estado,required String min,required  String max }){
-  final builder = MqttClientPayloadBuilder();
+  void setTemperatura(
+      {required String estado, required String min, required String max}) {
+    final builder = MqttClientPayloadBuilder();
     builder.addString('{"estado":"$estado","min":"$min","max":"$max"}');
-     
-      client.publishMessage('esp32/settemp', MqttQos.exactlyOnce, builder.payload! );
-      print("$estado $min $max");
-}
 
+    client.publishMessage(
+        'esp32/settemp', MqttQos.exactlyOnce, builder.payload!);
+    print("$estado $min $max");
+  }
 }

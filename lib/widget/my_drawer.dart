@@ -15,8 +15,8 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model2 = Provider.of<Myprivider>(context);
-    final model = Provider.of<ProviderDrawer>(context);
+    final mode = Provider.of<Myprivider>(context);
+    final modelDwer = Provider.of<ProviderDrawer>(context);
     return Drawer(
       //backgroundColor: Colors.indigo,
       semanticLabel: "Drawer",
@@ -31,10 +31,10 @@ class MyDrawer extends StatelessWidget {
               //radius: MediaQuery.of(context).size.width*.2,
               maxRadius: 100,
               child: Circulo(
-                color: model.estadoTema ? Colors.white : Colors.black,
+                color: modelDwer.estadoTema ? Colors.white : Colors.black,
                 child: AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 500),
-                  style: model2.ping_on
+                  style: mode.ping_on
                       ? const TextStyle(fontSize: 30, color: Colors.blue)
                       : const TextStyle(
                           fontSize: 20,
@@ -54,24 +54,22 @@ class MyDrawer extends StatelessWidget {
               // radius:MediaQuery.of(context).size.width*.2,
             ),
           ),
-          const Expanded(
-            flex: 6,
-             child:SetTemperature() ),
+          const Expanded(flex: 6, child: SetTemperature()),
           Expanded(
             flex: 1,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                model.estadoTema
+                modelDwer.estadoTema
                     ? const Text("Estilo Noche")
                     : const Text(
                         "Estilo Dia",
                         style: TextStyle(color: Colors.white),
                       ),
                 Switch.adaptive(
-                  value: model.estadoTema,
+                  value: modelDwer.estadoTema,
                   onChanged: (bool x) {
-                    model.estadoTema = !model.estadoTema;
+                    modelDwer.estadoTema = !modelDwer.estadoTema;
                     print(x);
                   },
                 )
@@ -83,4 +81,3 @@ class MyDrawer extends StatelessWidget {
     );
   }
 }
-
