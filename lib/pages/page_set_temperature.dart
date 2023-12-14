@@ -1,3 +1,4 @@
+import 'package:emqx/model/model.dart';
 import 'package:emqx/provider/provider.dart';
 import 'package:emqx/widget/circulo.dart';
 import 'package:flutter/material.dart';
@@ -39,15 +40,23 @@ class SetTemperature extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed:model.estadoConexion==Conexion.off?
-            null:
-             () {
-              model.setTemperatura(
-                  estado: "set",
-                  min: modelDw.setMin.text,
-                  max: modelDw.setMax.text);
-            },
-            icon: Icon(Icons.swap_vert_circle_outlined, size: 50,color: model.setMax=="0"?Colors.green:Colors.red,),
+            onPressed: model.estadoConexion == Conexion.off ||
+                    model.estadoBotonData == EstadoBotonData.set
+                ? null
+                : () {
+                    DataSeteo dataSeteo = DataSeteo(
+                        min: modelDw.setMin.text.toString(),
+                        max: modelDw.setMax.text.toString(),
+                        estado: "set");
+                    model.setTemperatura(dataSeteo);
+                  },
+            icon: Icon(
+              Icons.swap_vert_circle_outlined,
+              size: 50,
+              color: model.estadoBotonData == EstadoBotonData.set
+                  ? Colors.red
+                  : Colors.green,
+            ),
           ),
           Container(
             height: 200,

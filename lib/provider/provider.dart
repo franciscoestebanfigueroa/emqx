@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:emqx/model/model.dart';
 import 'package:emqx/model/model_promedio.dart';
+import 'package:emqx/provider/provider_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -15,16 +16,13 @@ class Myprivider extends ChangeNotifier {
   String _hora = "";
   String _setMax = "";
   String _setMin = "";
-  Map<String,dynamic>mapSetTemperatura={
-    "estado":"consulta",
-    "min":"4",
-    "max":8
-  };
+  late DataSeteo mapSetTemperatura;
+
   bool _ping = false;
   List<Map<String, dynamic>> tempOrdenadasHoras = [];
   List<double> _listTempOrdenado = [];
   late MqttServerClient client;
-
+  EstadoBotonData estadoBotonData = EstadoBotonData.info;
   Conexion estadoConexion = Conexion.off;
   late String estadoLed;
   late Esp32 esp32;
@@ -162,13 +160,14 @@ class Myprivider extends ChangeNotifier {
       if (c[0].topic == "esp32/settemp") {
         print("Seteo Maximos");
         // print(payload.trim());
-        Map<String,dynamic> seteo = json.decode(payload);
-        mapSetTemperatura.addAll(seteo);
-         print("mapa ${mapSetTemperatura}");
-        
-        if (seteo["estado"] == "ok") {
-          _setMax = seteo["max"].toString();
-          _setMin = seteo["min"].toString();
+        Map<String, dynamic> seteo = json.decode(payload);
+        mapSetTemperatura = DataSeteo.fromMap(seteo);
+
+        if (mapSetTemperatura.estado == "ok") {
+          estadoBotonData = EstadoBotonData.ok;
+          _setMax = mapSetTemperatura.max;
+          _setMin = mapSetTemperatura.min;
+          notifyListeners();
         }
 
         ping();
@@ -267,13 +266,14 @@ class Myprivider extends ChangeNotifier {
     return listhora;
   }
 
-  void setTemperatura(
-      {required String estado, required String min, required String max}) {
+  void setTemperatura(DataSeteo seteo) {
     final builder = MqttClientPayloadBuilder();
-    builder.addString('{"estado":"$estado","min":"$min","max":"$max"}');
+    builder.addString(seteo.aString(seteo));
 
     client.publishMessage(
         'esp32/settemp', MqttQos.exactlyOnce, builder.payload!);
-    print("$estado $min $max");
+    print("datos a enviar estado ${seteo.aString(seteo)}");
+    estadoBotonData = EstadoBotonData.set;
+    notifyListeners();
   }
 }

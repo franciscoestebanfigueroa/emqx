@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 //enum  MyTema{ ThemeData.dark() ,light()}
+enum EstadoBotonData { set, ok, info }
+
 class ProviderDrawer extends ChangeNotifier {
   bool _estadoTema = true;
-  TextEditingController setMax=TextEditingController(text: "8");
-  TextEditingController setMin=TextEditingController(text: "4");
+  TextEditingController setMax = TextEditingController(text: "8");
+  TextEditingController setMin = TextEditingController(text: "4");
 
   ProviderDrawer() {
-  print("provider drawer");
-  print(setMax);
-  print(setMin);
+    print("provider drawer");
+    print(setMax);
+    print(setMin);
 
     init();
   }
-
 
   bool get estadoTema => _estadoTema;
 

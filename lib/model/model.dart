@@ -8,7 +8,7 @@ List<Esp32> listEsp32(String str) {
   List<Esp32> listado = [];
   Map<String, dynamic> data = json.decode(str);
 
- // print(data.length);
+  // print(data.length);
   for (int i = 1; i <= data.length; i++) {
     listado.add(Esp32(
       hora: data[i.toString()]["hora"] ?? "0",
@@ -52,18 +52,20 @@ class Esp32 {
         "termica": termica,
         "hora": hora
       };
-
-
-
 }
-class DataSeteo{
 
-final String estado;
-final String min;
-final String max;
+class DataSeteo {
+  final String estado;
+  final String min;
+  final String max;
 
-  DataSeteo({required this.min, required this.max,required  this.estado});
+  DataSeteo({required this.min, required this.max, required this.estado});
 
-  factory DataSeteo.fromMap(Map<String,dynamic> map) => DataSeteo(min: map["min"], max: map["man"], estado: map["estado"]);
-
+  factory DataSeteo.fromMap(Map<String, dynamic> map) => DataSeteo(
+        min: map["min"].toString() ?? "4",
+        max: map["max"].toString() ?? "8",
+        estado: map["estado"] ?? "consulta",
+      );
+  String aString(DataSeteo map) =>
+      '{"estado":"${map.estado}","min":"${map.min}","max":"${map.max}"}';
 }
