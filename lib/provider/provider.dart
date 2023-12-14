@@ -89,6 +89,7 @@ class Myprivider extends ChangeNotifier {
     await Future.delayed(const Duration(seconds: 2));
     humedad = "0";
     await conectar();
+    getTemperatura();
   }
 
   Future<MqttServerClient> conectar() async {
@@ -268,6 +269,18 @@ class Myprivider extends ChangeNotifier {
 
   void setTemperatura(DataSeteo seteo) {
     final builder = MqttClientPayloadBuilder();
+    builder.addString(seteo.aString(seteo));
+
+    client.publishMessage(
+        'esp32/settemp', MqttQos.exactlyOnce, builder.payload!);
+    print("datos a enviar estado ${seteo.aString(seteo)}");
+    estadoBotonData = EstadoBotonData.set;
+    notifyListeners();
+  }
+
+  void getTemperatura() {
+    final builder = MqttClientPayloadBuilder();
+    DataSeteo seteo = DataSeteo(min: "0", max: "0", estado: "info");
     builder.addString(seteo.aString(seteo));
 
     client.publishMessage(
