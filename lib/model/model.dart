@@ -56,3 +56,14 @@ class Esp32 {
 
 
 }
+class DataSeteo{
+
+final String estado;
+final String min;
+final String max;
+
+  DataSeteo({required this.min, required this.max,required  this.estado});
+
+  factory DataSeteo.fromMap(Map<String,dynamic> map) => DataSeteo(min: map["min"], max: map["man"], estado: map["estado"]);
+
+}

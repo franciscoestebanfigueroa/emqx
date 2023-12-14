@@ -39,13 +39,15 @@ class SetTemperature extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {
+            onPressed:model.estadoConexion==Conexion.off?
+            null:
+             () {
               model.setTemperatura(
                   estado: "set",
                   min: modelDw.setMin.text,
                   max: modelDw.setMax.text);
             },
-            icon: Icon(Icons.swap_vert_circle_outlined, size: 50),
+            icon: Icon(Icons.swap_vert_circle_outlined, size: 50,color: model.setMax=="0"?Colors.green:Colors.red,),
           ),
           Container(
             height: 200,

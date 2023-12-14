@@ -15,6 +15,11 @@ class Myprivider extends ChangeNotifier {
   String _hora = "";
   String _setMax = "";
   String _setMin = "";
+  Map<String,dynamic>mapSetTemperatura={
+    "estado":"consulta",
+    "min":"4",
+    "max":8
+  };
   bool _ping = false;
   List<Map<String, dynamic>> tempOrdenadasHoras = [];
   List<double> _listTempOrdenado = [];
@@ -157,8 +162,10 @@ class Myprivider extends ChangeNotifier {
       if (c[0].topic == "esp32/settemp") {
         print("Seteo Maximos");
         // print(payload.trim());
-        dynamic seteo = json.decode(payload);
-        print(seteo);
+        Map<String,dynamic> seteo = json.decode(payload);
+        mapSetTemperatura.addAll(seteo);
+         print("mapa ${mapSetTemperatura}");
+        
         if (seteo["estado"] == "ok") {
           _setMax = seteo["max"].toString();
           _setMin = seteo["min"].toString();
